@@ -1,4 +1,4 @@
-package com.cobelu;
+package com.cobelu.build_log;
 
 public class Application {
 
