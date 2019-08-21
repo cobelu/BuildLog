@@ -14,7 +14,6 @@ public class ApplicationFrame extends JFrame {
 	private EntryPanel entryPanel;
 	
 	public ApplicationFrame(Model model) {
-		setVisible(true);
 		this.model = model;
 		
 		setSize(new Dimension(600, 400));
@@ -35,7 +34,7 @@ public class ApplicationFrame extends JFrame {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
 		
-		entryPanel = new EntryPanel();
+		entryPanel = new EntryPanel(model.getEntryModel());
 		getContentPane().add(entryPanel);
 		
 	}

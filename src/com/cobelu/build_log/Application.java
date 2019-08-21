@@ -9,7 +9,8 @@ public class Application {
 
 		Model model = new Model();
 		ApplicationFrame appFrame = new ApplicationFrame(model);
-
+		appFrame.setVisible(true);
+		
 	}
 
 }
