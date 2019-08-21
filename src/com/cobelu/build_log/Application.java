@@ -1,9 +1,14 @@
 package com.cobelu.build_log;
 
+import com.cobelu.build_log.model.Model;
+import com.cobelu.build_log.view.ApplicationFrame;
+
 public class Application {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
+		Model model = new Model();
+		ApplicationFrame appFrame = new ApplicationFrame(model);
 
 	}
 
