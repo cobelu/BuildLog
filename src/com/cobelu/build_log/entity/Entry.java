@@ -118,12 +118,12 @@ public class Entry extends BaseEntity {
 	public String toString() {
 		String rtnString = "";
 		rtnString += startDate.toString();
-		rtnString += " ";
-		rtnString += startTime.toString();
-		rtnString += " to ";
-		rtnString += endDate.toString();
-		rtnString += " ";
-		rtnString += startTime.toString();
+		// rtnString += " ";
+		// rtnString += startTime.toString();
+		// rtnString += " to ";
+		// rtnString += endDate.toString();
+		// rtnString += " ";
+		// rtnString += startTime.toString();
 		return rtnString;
 	}
 

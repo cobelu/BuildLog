@@ -18,7 +18,7 @@ public class BaseDaoJdbc {
 	 */
 
 	private final String DB_DRIVER = "org.sqlite.JDBC";
-	private final String DB_PREFIX = "jdbc:sqlite:src/main/resources/databases/";
+	private final String DB_PREFIX = "jdbc:sqlite:src/resources/databases/";
 	private final String DATABASE_NAME = "buildlog.db";
 	private final String DB_URL = DB_PREFIX + DATABASE_NAME;
 

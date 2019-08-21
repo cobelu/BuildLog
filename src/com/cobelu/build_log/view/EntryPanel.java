@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JList;
+import java.awt.BorderLayout;
 
 public class EntryPanel extends JPanel {
 
@@ -21,7 +22,8 @@ public class EntryPanel extends JPanel {
 	 */
 	public EntryPanel(EntryModel entryModel) {
 		this.entryModel = entryModel;
-
+		setLayout(new BorderLayout(0, 0));
+		
 		list = new JList<Entry>();
 		updateEntryList();
 		add(list);

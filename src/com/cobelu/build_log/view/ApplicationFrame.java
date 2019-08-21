@@ -25,8 +25,17 @@ public class ApplicationFrame extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-		mnFile.add(mntmNewMenuItem);
+		JMenuItem mntmNewEntry = new JMenuItem("New Entry");
+		mnFile.add(mntmNewEntry);
+		
+		JMenuItem mntmNewProject = new JMenuItem("New Project");
+		mnFile.add(mntmNewProject);
+		
+		JMenuItem mntmOpenProject = new JMenuItem("Open Project");
+		mnFile.add(mntmOpenProject);
+		
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mnFile.add(mntmExit);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
