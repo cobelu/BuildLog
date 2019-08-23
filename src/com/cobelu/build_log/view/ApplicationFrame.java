@@ -91,7 +91,7 @@ public class ApplicationFrame extends JFrame {
 	 * Called when the new entry button is pressed.
 	 */
 	private void onNewEntryPress() {
-		
+		System.exit(0);
 	}
 	
 	/**

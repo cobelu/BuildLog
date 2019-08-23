@@ -17,6 +17,8 @@ public class EntryFrame extends JFrame {
 	 * A blank, unfilled entry editing.
 	 */
 	public EntryFrame() {
+		setPreferredSize(new Dimension(300, 400));
+		setLocationRelativeTo(null);
 		setSize(new Dimension(300, 400));
 		
 		JPanel panel = new JPanel();
