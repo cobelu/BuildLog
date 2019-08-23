@@ -1,19 +1,19 @@
 package com.cobelu.build_log.view;
 
+import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.EntryModel;
-import javax.swing.JTable;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JList;
-import java.awt.BorderLayout;
 
 public class EntryPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private EntryModel entryModel;
 	private JList<Entry> list;
 
@@ -23,8 +23,24 @@ public class EntryPanel extends JPanel {
 	public EntryPanel(EntryModel entryModel) {
 		this.entryModel = entryModel;
 		setLayout(new BorderLayout(0, 0));
-		
+
 		list = new JList<Entry>();
+		/*
+		 * On a double-click, a dialog box for that selected entry will appear
+		 * 
+		 * https://www.comp.nus.edu.sg/~cs3283/ftp/Java/swingConnect/tech_topics/jlist_1/jlist.html
+		 */
+		MouseListener mouseListener = new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					// int index = list.locationToIndex(e.getPoint());
+					Entry selectedEntry = list.getSelectedValue();
+					EntryFrame entryFrame = new EntryFrame(selectedEntry);
+					entryFrame.setVisible(true);
+				}
+			}
+		};
+		list.addMouseListener(mouseListener);
 		updateEntryList();
 		add(list);
 	}
