@@ -32,7 +32,6 @@ public class ApplicationFrame extends JFrame {
 
 		JMenuItem mntmNewEntry = new JMenuItem("New Entry");
 		mntmNewEntry.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				onNewEntryPress();
 			}
@@ -43,7 +42,6 @@ public class ApplicationFrame extends JFrame {
 
 		JMenuItem mntmNewProject = new JMenuItem("New Project");
 		mntmNewProject.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				onNewProjectPress();
 			}
@@ -52,7 +50,6 @@ public class ApplicationFrame extends JFrame {
 
 		JMenuItem mntmOpenProject = new JMenuItem("Open Project");
 		mntmOpenProject.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				onOpenProjectPress();
 			}
@@ -63,7 +60,6 @@ public class ApplicationFrame extends JFrame {
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				onExitPress();
 			}
@@ -75,7 +71,6 @@ public class ApplicationFrame extends JFrame {
 
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				onAboutPress();
 			}

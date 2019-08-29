@@ -1,5 +1,6 @@
 package com.cobelu.build_log;
 
+import com.cobelu.build_log.model.Model;
 import com.cobelu.build_log.view.MainPane;
 
 import javafx.application.Application;
@@ -13,12 +14,15 @@ import javafx.stage.Stage;
  */
 public class BuildLogApplication extends Application {
 
+	Model model;
+	MainPane mainPane;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			MainPane mainPane = new MainPane(primaryStage);
+			model = new Model();
+			mainPane = new MainPane(primaryStage, model);
 			Scene scene = new Scene(mainPane, 400, 400);
-//			scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Bully");
 			primaryStage.show();
@@ -30,4 +34,5 @@ public class BuildLogApplication extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }
