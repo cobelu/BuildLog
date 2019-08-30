@@ -5,9 +5,11 @@ import com.cobelu.build_log.model.EntryModel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 public class EntryPane extends BorderPane {
@@ -44,6 +46,22 @@ public class EntryPane extends BorderPane {
 		// Populate with data
 		ObservableList<Entry> entries = FXCollections.observableList(entryModel.findAll());
 		tableView.setItems(entries);
+
+		// Double click feature
+		tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				/*
+				 * Double click event
+				 * 
+				 * https://stackoverflow.com/a/26564412
+				 */
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					// TODO: Open a new entry window
+					
+				}
+			}
+		});
 
 		setCenter(borderPane);
 	}
