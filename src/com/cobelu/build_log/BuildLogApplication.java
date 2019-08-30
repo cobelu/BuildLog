@@ -16,7 +16,7 @@ public class BuildLogApplication extends Application {
 
 	Model model;
 	MainPane mainPane;
-	
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -34,5 +34,5 @@ public class BuildLogApplication extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 }
