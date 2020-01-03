@@ -6,11 +6,13 @@ import com.cobelu.build_log.model.EntryModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class EntryPane extends BorderPane {
 
@@ -56,12 +58,22 @@ public class EntryPane extends BorderPane {
 				 */
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					// TODO: Open a new entry window
-					
+					Entry selectedEntry = tableView.getSelectionModel().getSelectedItem();
+					displayEntryEditor(selectedEntry);
+					System.out.println("You selected: " + selectedEntry.toString());
 				}
 			}
 		});
 
 		setCenter(borderPane);
+	}
+
+	private void displayEntryEditor(Entry entry) {
+		EntryEditor entryEditor = new EntryEditor(entry);
+		Stage stage = new Stage();
+		stage.setTitle("Edit an Entry");
+		stage.setScene(new Scene(entryEditor, 450, 450));
+		stage.show();
 	}
 
 	public EntryModel getEntryModel() {

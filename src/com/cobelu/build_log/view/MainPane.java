@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 public class MainPane extends BorderPane {
 
 	// Awareness of the model
-	private Model model;
 	private Stage stage;
+	private Model model;
 	private EntryPane entryPane;
 
 	public MainPane(Stage primaryStage, Model model) {
