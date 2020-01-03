@@ -1,11 +1,15 @@
 package com.cobelu.build_log.view;
 
+import java.io.IOException;
+
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.EntryModel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -69,11 +73,16 @@ public class EntryPane extends BorderPane {
 	}
 
 	private void displayEntryEditor(Entry entry) {
-		EntryEditor entryEditor = new EntryEditor(entry);
-		Stage stage = new Stage();
-		stage.setTitle("Edit an Entry");
-		stage.setScene(new Scene(entryEditor, 450, 450));
-		stage.show();
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/resources/fxml/entry_editor.fxml"));
+			Stage stage = new Stage();
+			stage.setTitle("Registration Form FXML Application");
+			stage.setScene(new Scene(root, 800, 500));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public EntryModel getEntryModel() {
