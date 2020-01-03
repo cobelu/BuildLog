@@ -2,6 +2,8 @@ package com.cobelu.build_log.view;
 
 import com.cobelu.build_log.model.Model;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -26,16 +28,26 @@ public class MainPane extends BorderPane {
 		
 		// File menu items
 		final Menu file = new Menu("File");
-
 		// Quit
 		MenuItem quit = new MenuItem("Quit");
 		quit.setOnAction(e -> {
 		    System.exit(0); // Quit on press
 		});
-		
 		file.getItems().addAll(quit);
 
+		// Help menu items
 		final Menu help = new Menu("Help");
+		// About
+		MenuItem about = new MenuItem("About");
+		about.setOnAction(e -> {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Bully");
+			alert.setHeaderText(null);
+			alert.setContentText("Bully - The Builder's Logging Tool - Connor Luckett");
+			alert.showAndWait(); // Popup on press
+		});
+		help.getItems().addAll(about);
+		
 		menuBar.getMenus().addAll(file, help);
 		setTop(menuBar);
 		
