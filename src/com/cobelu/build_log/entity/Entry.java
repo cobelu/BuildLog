@@ -1,7 +1,6 @@
 package com.cobelu.build_log.entity;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -19,11 +18,9 @@ public class Entry extends BaseEntity {
 	 * Fields
 	 */
 
-	private Date startDate;
-	private Date endDate;
-	private Time startTime;
-	private Time endTime;
-	private String chapter;
+	private LocalDate date;
+	private Integer minutes;
+	private String category;
 	private String title;
 	private String description;
 
@@ -35,13 +32,11 @@ public class Entry extends BaseEntity {
 		super();
 	}
 
-	public Entry(Date startDate, Date endDate, Time startTime, Time endTime, String chapter, String title, String description) {
+	public Entry(LocalDate date, Integer minutes, String category, String title, String description) {
 		this();
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.chapter = chapter;
+		this.date = date;
+		this.minutes = minutes;
+		this.category = category;
 		this.title = title;
 		this.description = description;
 	}
@@ -50,30 +45,22 @@ public class Entry extends BaseEntity {
 	 * Getters
 	 */
 
-	public Date getStartDate() {
-		return startDate;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Integer getMinutes() {
+		return minutes;
 	}
 
-	public Time getStartTime() {
-		return startTime;
+	public String getCategory() {
+		return category;
 	}
 
-	public Time getEndTime() {
-		return endTime;
-	}
-	
-	public String getChapter() {
-		return chapter;
-	}
-	
 	public String getTitle() {
 		return title;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -81,27 +68,19 @@ public class Entry extends BaseEntity {
 	/*
 	 * Setters
 	 */
-	
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setMinutes(Integer minutes) {
+		this.minutes = minutes;
 	}
 
-	public void setStartTime(Time startTime) {
-		this.startTime = startTime;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public void setEndTime(Time endTime) {
-		this.endTime = endTime;
-	}
-	
-	public void setChapter(String chapter) {
-		this.chapter = chapter;
-	}
-	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -109,15 +88,15 @@ public class Entry extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/*
 	 * Others
 	 */
-	
+
 	@Override
 	public String toString() {
 		String rtnString = "";
-		rtnString += startDate.toString();
+		rtnString += date.toString();
 		// rtnString += " ";
 		// rtnString += startTime.toString();
 		// rtnString += " to ";

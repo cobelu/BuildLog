@@ -1,9 +1,8 @@
 package com.cobelu.build_log.dao_jdbc;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,11 +11,10 @@ import com.cobelu.build_log.entity.Entry;
 
 public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 
-	private final String entryTable = "ENTRIES";
+	private final String entryTable = "ENTRY";
 	private final String idCol = "ID";
-	private final String startDateTimeCol = "STARTDATETIME";
-	private final String endDateTimeCol = "ENDDATETIME";
-	private final String chapterCol = "CHAPTER";
+	private final String dateCol = "DATE";
+	private final String categoryCol = "CATEGORY";
 	private final String titleCol = "TITLE";
 	private final String descCol = "DESCRIPTION";
 
@@ -72,11 +70,9 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		insert += "(";
 		insert += idCol;
 		insert += ", ";
-		insert += startDateTimeCol;
+		insert += dateCol;
 		insert += ", ";
-		insert += endDateTimeCol;
-		insert += ", ";
-		insert += chapterCol;
+		insert += categoryCol;
 		insert += ", ";
 		insert += titleCol;
 		insert += ", ";
@@ -84,11 +80,9 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		insert += ") VALUES(";
 		insert += entry.getId();
 		insert += ", ";
-		insert += entry.getStartDate();
+		insert += entry.getDate();
 		insert += ", ";
-		insert += entry.getEndDate();
-		insert += ", ";
-		insert += entry.getChapter();
+		insert += entry.getCategory();
 		insert += ", ";
 		insert += entry.getTitle();
 		insert += ", ";
@@ -108,9 +102,13 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		update += entry.getId();
 		update += ", ";
 		// TODO Update time and dates as well
-		update += chapterCol;
+		update += dateCol;
 		update += "=";
-		update += entry.getChapter();
+		update += entry.getDate().toString();
+		update += ", ";
+		update += categoryCol;
+		update += "=";
+		update += entry.getCategory();
 		update += ", ";
 		update += titleCol;
 		update += "=";
@@ -157,11 +155,8 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		while (rs.next()) {
 			Entry entry = new Entry();
 			entry.setId(rs.getLong(idCol));
-			entry.setStartDate(new Date(rs.getLong(startDateTimeCol)));
-			entry.setEndDate(new Date(rs.getLong(endDateTimeCol)));
-			entry.setStartTime(new Time(rs.getLong(startDateTimeCol)));
-			entry.setEndTime(new Time(rs.getLong(endDateTimeCol)));
-			entry.setChapter(rs.getString(chapterCol));
+			entry.setDate(LocalDate.parse(rs.getString(dateCol)));
+			entry.setCategory(rs.getString(categoryCol));
 			entry.setTitle(rs.getString(titleCol));
 			entry.setDescription(rs.getString(descCol));
 			entries.add(entry);

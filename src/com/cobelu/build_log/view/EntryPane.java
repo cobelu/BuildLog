@@ -26,19 +26,17 @@ public class EntryPane extends BorderPane {
 		// Content inside the tab
 		BorderPane borderPane = new BorderPane();
 		tableView = new TableView<Entry>();
-		TableColumn<Entry, String> startDateCol = new TableColumn<Entry, String>("Start Date");
-		startDateCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("startDate"));
-		TableColumn<Entry, String> startTimeCol = new TableColumn<Entry, String>("End Date");
-		startTimeCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("endDate"));
-		TableColumn<Entry, String> endDateCol = new TableColumn<Entry, String>("Start Time");
-		endDateCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("startTime"));
-		TableColumn<Entry, String> endTimeCol = new TableColumn<Entry, String>("End Time");
-		endTimeCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("endTime"));
-		TableColumn<Entry, String> chapterCol = new TableColumn<Entry, String>("Chapter");
-		chapterCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("chapter"));
+		TableColumn<Entry, String> dateCol = new TableColumn<Entry, String>("Date");
+		dateCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("date"));
+		TableColumn<Entry, String> minutesCol = new TableColumn<Entry, String>("Minutes");
+		minutesCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("minutes"));
+		TableColumn<Entry, String> categoryCol = new TableColumn<Entry, String>("Category");
+		categoryCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("category"));
+		TableColumn<Entry, String> titleCol = new TableColumn<Entry, String>("Title");
+		titleCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("title"));
 		TableColumn<Entry, String> descCol = new TableColumn<Entry, String>("Description");
 		descCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("description"));
-		tableView.getColumns().addAll(startDateCol, startTimeCol, endDateCol, endTimeCol, chapterCol, descCol);
+		tableView.getColumns().addAll(dateCol, minutesCol, categoryCol, titleCol, descCol);
 
 		// Add table view to pane
 		borderPane.setCenter(tableView);
