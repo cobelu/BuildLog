@@ -78,6 +78,12 @@ public class EntryEditor extends GridPane {
 		// Cancel Button
 		cancelButton = new Button("Cancel");
 		// TODO: Cancel button action
+		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				System.out.println("Cancel Button Pressed!");
+			}
+		});
 		add(cancelButton, 1, 6);
 
 	}
