@@ -1,5 +1,7 @@
 package com.cobelu.build_log.view;
 
+import java.time.LocalDate;
+
 import com.cobelu.build_log.entity.Entry;
 
 import javafx.event.ActionEvent;
@@ -15,10 +17,16 @@ import javafx.scene.layout.GridPane;
 public class EntryEditor extends GridPane {
 
 	private Entry entry;
+	private DatePicker datePicker;
+	private TextField minutesTextField;
+	private TextField categoryTextField;
+	private TextField titleTextField;
+	private TextField descriptionTextField;
+	private Button saveButton;
+	private Button cancelButton;
 
-	public EntryEditor(Entry entry) {
+	public EntryEditor() {
 		super();
-		this.entry = entry;
 
 		// Geometry
 		setAlignment(Pos.CENTER);
@@ -29,48 +37,59 @@ public class EntryEditor extends GridPane {
 		// Date
 		Label dateLabel = new Label("Date:");
 		add(dateLabel, 0, 1);
-		DatePicker datePicker = new DatePicker(entry.getDate());
+		datePicker = new DatePicker(LocalDate.now());
 		add(datePicker, 1, 1);
 
 		// Minutes
 		Label minutesLabel = new Label("Minutes:");
 		add(minutesLabel, 0, 2);
-		TextField minutesTextField = new TextField(entry.getMinutes().toString());
+		minutesTextField = new TextField();
 		add(minutesTextField, 1, 2);
 
 		// Category
 		Label categoryLabel = new Label("Category:");
 		add(categoryLabel, 0, 3);
-		TextField categoryTextField = new TextField(entry.getCategory());
+		categoryTextField = new TextField();
 		add(categoryTextField, 1, 3);
 
 		// Title
 		Label titleLabel = new Label("Title:");
 		add(titleLabel, 0, 4);
-		TextField titleTextField = new TextField(entry.getTitle());
+		titleTextField = new TextField();
 		add(titleTextField, 1, 4);
 
 		// Description
 		Label descriptionLabel = new Label("Description:");
 		add(descriptionLabel, 0, 5);
-		TextField descriptionTextField = new TextField(entry.getDescription());
+		descriptionTextField = new TextField();
 		add(descriptionTextField, 1, 5);
-		
+
 		// Submit button
-		Button saveButton = new Button("Save");
+		saveButton = new Button("Save");
 		// TODO: Save button action
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		        System.out.println("Save Button Pressed!");
-		    }
+			@Override
+			public void handle(ActionEvent e) {
+				System.out.println("Save Button Pressed!");
+			}
 		});
 		add(saveButton, 0, 6);
-		
+
 		// Cancel Button
-		Button cancelButton = new Button("Cancel");
+		cancelButton = new Button("Cancel");
 		// TODO: Cancel button action
 		add(cancelButton, 1, 6);
 
+	}
+
+	public EntryEditor(Entry entry) {
+		this();
+		// Populate with the values of a given entry
+		datePicker.setValue(entry.getDate());
+		minutesTextField.setText(entry.getMinutes().toString());
+		categoryTextField.setText(entry.getCategory());
+		titleTextField.setText(entry.getTitle());
+		descriptionTextField.setText(entry.getDescription());
 	}
 
 	public Entry getEntry() {
