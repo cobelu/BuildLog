@@ -14,6 +14,7 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 	private final String entryTable = "ENTRY";
 	private final String idCol = "ID";
 	private final String dateCol = "DATE";
+	private final String minutesCol = "MINUTES";
 	private final String categoryCol = "CATEGORY";
 	private final String titleCol = "TITLE";
 	private final String descCol = "DESCRIPTION";
@@ -72,15 +73,19 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		insert += ", ";
 		insert += dateCol;
 		insert += ", ";
+		insert += minutesCol;
+		insert += ", ";
 		insert += categoryCol;
 		insert += ", ";
 		insert += titleCol;
 		insert += ", ";
 		insert += descCol;
 		insert += ") VALUES(";
-		insert += entry.getId();
+		insert += entry.getId().toString();
 		insert += ", ";
-		insert += entry.getDate();
+		insert += entry.getDate().toString();
+		insert += ", ";
+		insert += entry.getMinutes().toString();
 		insert += ", ";
 		insert += entry.getCategory();
 		insert += ", ";
@@ -101,10 +106,13 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		update += "=";
 		update += entry.getId();
 		update += ", ";
-		// TODO Update time and dates as well
 		update += dateCol;
 		update += "=";
 		update += entry.getDate().toString();
+		update += ", ";
+		update += minutesCol;
+		update += "=";
+		update += entry.getMinutes().toString();
 		update += ", ";
 		update += categoryCol;
 		update += "=";
@@ -156,6 +164,7 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 			Entry entry = new Entry();
 			entry.setId(rs.getLong(idCol));
 			entry.setDate(LocalDate.parse(rs.getString(dateCol)));
+			entry.setMinutes(rs.getInt(minutesCol));
 			entry.setCategory(rs.getString(categoryCol));
 			entry.setTitle(rs.getString(titleCol));
 			entry.setDescription(rs.getString(descCol));
