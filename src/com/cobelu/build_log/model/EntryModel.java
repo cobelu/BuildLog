@@ -9,6 +9,7 @@ import com.cobelu.build_log.dao_interface.EntryDaoI;
 public class EntryModel {
 
 	private EntryDaoI entryDao;
+	private Entry selectedEntry;
 
 	/*
 	 * Constructor
@@ -41,5 +42,17 @@ public class EntryModel {
 	public void delete(Entry entry) {
 		entryDao.delete(entry);
 	}
+	
+	/*
+	 * Getters and Setters
+	 */
 
+	public Entry getSelectedEntry() {
+		return selectedEntry;
+	}
+	
+	public void setSelectedEntry(Entry entry) {
+		selectedEntry = entry;
+	}
+	
 }

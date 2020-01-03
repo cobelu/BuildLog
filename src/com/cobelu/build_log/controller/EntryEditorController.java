@@ -1,5 +1,9 @@
 package com.cobelu.build_log.controller;
 
+import java.time.LocalDate;
+
+import com.cobelu.build_log.entity.Entry;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,9 +29,21 @@ public class EntryEditorController {
 	@FXML
 	private Button cancelButton;
 
+//	@FXML
+//	private void initialize() {
+//		// Populate with the values of a given entry
+//		datePicker.setValue(entry.getDate());
+//		minutesTextField.setText(entry.getMinutes().toString());
+//		categoryTextField.setText(entry.getCategory());
+//		titleTextField.setText(entry.getTitle());
+//		descriptionTextField.setText(entry.getDescription());
+//	}
+
 	@FXML
 	protected void handleSubmitButtonAction(ActionEvent event) {
 		Window owner = submitButton.getScene().getWindow();
+
+		// Check valid responses
 		if (minutesTextField.getText().isEmpty()) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Form Error!", "Please enter your email id");
 			return;
@@ -45,8 +61,15 @@ public class EntryEditorController {
 			return;
 		}
 
-		AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Registration Successful!",
-				"Welcome!");
+		// Process
+		LocalDate date = datePicker.getValue();
+		Integer minutes = Integer.parseInt(minutesTextField.getText());
+		String category = categoryTextField.getText();
+		String title = titleTextField.getText();
+		String description = descriptionTextField.getText();
+		Entry newEntry = new Entry(date, minutes, category, title, description);
+
+		AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Done!", newEntry.toString());
 	}
 
 }

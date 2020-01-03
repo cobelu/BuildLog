@@ -73,14 +73,14 @@ public class EntryPane extends BorderPane {
 	}
 
 	private void displayEntryEditor(Entry entry) {
-		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/resources/fxml/entry_editor.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/entry_editor.fxml"));
 			Stage stage = new Stage();
 			stage.setTitle("Registration Form FXML Application");
 			stage.setScene(new Scene(root, 800, 500));
 			stage.show();
 		} catch (IOException e) {
+			System.err.println("Failed to load Entry Editor FXML");
 			e.printStackTrace();
 		}
 	}
