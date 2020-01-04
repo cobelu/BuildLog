@@ -35,6 +35,7 @@ public class EntryEditorController {
 		minutesTextField.setText("60");
 		titleTextField.setText("Entry Title");
 		descriptionTextField.setText("This is a description.");
+		// TODO: Replace static values with dynamic values
 //		datePicker.setValue(entry.getDate());
 //		minutesTextField.setText(entry.getMinutes().toString());
 //		categoryTextField.setText(entry.getCategory());

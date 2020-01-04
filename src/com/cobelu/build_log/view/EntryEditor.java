@@ -3,6 +3,7 @@ package com.cobelu.build_log.view;
 import java.time.LocalDate;
 
 import com.cobelu.build_log.entity.Entry;
+import com.cobelu.build_log.model.EntryModel;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,20 +14,31 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class EntryEditor extends GridPane {
 
+	/*
+	 * Fields
+	 */
+
+	private Stage stage;
 	private Entry entry;
+	private EntryModel entryModel;
 	private DatePicker datePicker;
 	private TextField minutesTextField;
 	private TextField categoryTextField;
 	private TextField titleTextField;
 	private TextField descriptionTextField;
 	private Button saveButton;
-	private Button cancelButton;
 
-	public EntryEditor() {
+	/*
+	 * Constructors
+	 */
+
+	public EntryEditor(Stage stage, EntryModel entryModel) {
 		super();
+		this.entryModel = entryModel;
 
 		// Geometry
 		setAlignment(Pos.CENTER);
@@ -71,31 +83,49 @@ public class EntryEditor extends GridPane {
 			@Override
 			public void handle(ActionEvent e) {
 				System.out.println("Save Button Pressed!");
+				// Harvest the data from the fields
+				harvestFields(); // TODO: Add error handling
+				// Alert the model
+				entryModel.update(entry); // TODO: Fix SQL error
 			}
 		});
 		add(saveButton, 0, 6);
-
-		// Cancel Button
-		cancelButton = new Button("Cancel");
-		// TODO: Cancel button action
-		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				System.out.println("Cancel Button Pressed!");
-			}
-		});
-		add(cancelButton, 1, 6);
-
 	}
 
-	public EntryEditor(Entry entry) {
-		this();
+	public EntryEditor(Stage stage, EntryModel entryModel, Entry entry) {
+		this(stage, entryModel);
+		this.entry = entry;
+
 		// Populate with the values of a given entry
 		datePicker.setValue(entry.getDate());
 		minutesTextField.setText(entry.getMinutes().toString());
 		categoryTextField.setText(entry.getCategory());
 		titleTextField.setText(entry.getTitle());
 		descriptionTextField.setText(entry.getDescription());
+	}
+
+	/*
+	 * Methods
+	 */
+
+	private void harvestFields() {
+		entry.setDate(datePicker.getValue());
+		entry.setMinutes(Integer.parseInt(minutesTextField.getText()));
+		entry.setCategory(categoryTextField.getText());
+		entry.setTitle(titleTextField.getText());
+		entry.setDescription(descriptionTextField.getText());
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public EntryModel getEntryModel() {
+		return entryModel;
 	}
 
 	public Entry getEntry() {

@@ -18,10 +18,10 @@ public class MainPane extends BorderPane {
 	private Model model;
 	private EntryPane entryPane;
 
-	public MainPane(Stage primaryStage, Model model) {
+	public MainPane(Stage stage, Model model) {
 		super();
 
-		this.stage = primaryStage;
+		this.stage = stage;
 		this.model = model;
 
 		// Menu bar
@@ -58,13 +58,12 @@ public class MainPane extends BorderPane {
 		setTop(menuBar);
 
 		// Entry Pane
-		entryPane = new EntryPane(model.getEntryModel());
+		entryPane = new EntryPane(this.stage, model.getEntryModel());
 		setCenter(entryPane);
-
 	}
 
 	private void displayNewEntryWindow() {
-		EntryEditor entryEditor = new EntryEditor();
+		EntryEditor entryEditor = new EntryEditor(stage, model.getEntryModel());
 		Stage stage = new Stage();
 		stage.setTitle("Create an Entry");
 		stage.setScene(new Scene(entryEditor, 450, 450));

@@ -1,15 +1,11 @@
 package com.cobelu.build_log.view;
 
-import java.io.IOException;
-
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.EntryModel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,13 +16,15 @@ import javafx.stage.Stage;
 
 public class EntryPane extends BorderPane {
 
+	private Stage stage;
 	private EntryModel entryModel;
 	private TableView<Entry> tableView;
 
 	@SuppressWarnings("unchecked")
-	public EntryPane(EntryModel entryModel) {
+	public EntryPane(Stage stage, EntryModel entryModel) {
 		super();
 
+		this.stage = stage;
 		this.entryModel = entryModel;
 
 		// Content inside the tab
@@ -63,7 +61,7 @@ public class EntryPane extends BorderPane {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					// TODO: Open a new entry window
 					Entry selectedEntry = tableView.getSelectionModel().getSelectedItem();
-					displayEntryEditor(selectedEntry);
+					displayEntryEditor(selectedEntry, entryModel);
 					System.out.println("You selected: " + selectedEntry.toString());
 				}
 			}
@@ -72,17 +70,12 @@ public class EntryPane extends BorderPane {
 		setCenter(borderPane);
 	}
 
-	private void displayEntryEditor(Entry entry) {
-		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/entry_editor.fxml"));
-			Stage stage = new Stage();
-			stage.setTitle("Edit an Entry");
-			stage.setScene(new Scene(root, 800, 500));
-			stage.show();
-		} catch (IOException e) {
-			System.err.println("Failed to load Entry Editor FXML");
-			e.printStackTrace();
-		}
+	private void displayEntryEditor(Entry entry, EntryModel entryModel) {
+		EntryEditor entryEditor = new EntryEditor(stage, entryModel, entry);
+		Stage stage = new Stage();
+		stage.setTitle("Edit an Entry");
+		stage.setScene(new Scene(entryEditor, 450, 450));
+		stage.show();
 	}
 
 	public EntryModel getEntryModel() {
