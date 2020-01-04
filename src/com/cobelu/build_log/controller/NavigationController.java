@@ -19,7 +19,6 @@ public class NavigationController {
 	}
 
 	public void openMainStage() {
-		System.out.println("Opening a main stage");
 		currentStage.hide();
 		currentStage = new Stage();
 		MainPane mainPane = new MainPane(this, model);
@@ -28,15 +27,24 @@ public class NavigationController {
 		currentStage.setTitle("Bully");
 		currentStage.show();
 	}
-
+	
 	public void openEntryEditorStage() {
-		System.out.println("Opening an editor stage");
+		currentStage.hide();
+		currentStage = new Stage();
+		EntryEditor entryEditor = new EntryEditor(this, model, model.getEntryModel().getSelectedEntry());
+		Scene scene = new Scene(entryEditor, 400, 400);
+		currentStage.setScene(scene);
+		currentStage.setTitle("Edit an Entry");
+		currentStage.show();
+	}
+
+	public void openNewEntryStage() {
 		currentStage.hide();
 		currentStage = new Stage();
 		EntryEditor entryEditor = new EntryEditor(this, model);
 		Scene scene = new Scene(entryEditor, 400, 400);
 		currentStage.setScene(scene);
-		currentStage.setTitle("Bully");
+		currentStage.setTitle("Add an Entry");
 		currentStage.show();
 	}
 
