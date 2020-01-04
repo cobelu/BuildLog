@@ -59,8 +59,7 @@ public class EntryPane extends BorderPane {
 				 */
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					// TODO: Open a new entry window
-					Entry selectedEntry = tableView.getSelectionModel().getSelectedItem();
-					displayEntryEditor(selectedEntry, model);
+					onEntryDoubleClick();
 				}
 			}
 		});
@@ -68,11 +67,18 @@ public class EntryPane extends BorderPane {
 		setCenter(borderPane);
 	}
 
+	private void onEntryDoubleClick() {
+		// Get selected entry that was double clicked
+		Entry selectedEntry = tableView.getSelectionModel().getSelectedItem();
+		// Display an editor for that entry
+		displayEntryEditor(selectedEntry, model);
+	}
+
 	private void displayEntryEditor(Entry entry, Model model) {
 		// Update selected entry in model
 		model.getEntryModel().setSelectedEntry(entry);
 		// Stage changes scene to editing scene
-		navCon.openEntryEditorStage();
+		navCon.openEntryEditorStage(entry);
 	}
 
 	public Model getModel() {

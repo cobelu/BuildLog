@@ -31,7 +31,7 @@ public class MainPane extends BorderPane {
 		// New entry
 		MenuItem newEntry = new MenuItem("New Entry");
 		newEntry.setOnAction(e -> {
-			onEntryDoubleClick(); // Create a new entry on press
+			onNewEntryClick(); // Create a new entry on press
 		});
 		// Quit
 		MenuItem quit = new MenuItem("Quit");
@@ -61,8 +61,8 @@ public class MainPane extends BorderPane {
 		setCenter(entryPane);
 	}
 
-	private void onEntryDoubleClick() {
-		navCon.openEntryEditorStage();
+	private void onNewEntryClick() {
+		navCon.openNewEntryStage();
 	}
 
 	public Model getModel() {

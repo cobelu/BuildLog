@@ -1,5 +1,6 @@
 package com.cobelu.build_log.controller;
 
+import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.Model;
 import com.cobelu.build_log.view.EntryEditor;
 import com.cobelu.build_log.view.MainPane;
@@ -27,11 +28,11 @@ public class NavigationController {
 		currentStage.setTitle("Bully");
 		currentStage.show();
 	}
-	
-	public void openEntryEditorStage() {
+
+	public void openEntryEditorStage(Entry entry) {
 		currentStage.hide();
 		currentStage = new Stage();
-		EntryEditor entryEditor = new EntryEditor(this, model, model.getEntryModel().getSelectedEntry());
+		EntryEditor entryEditor = new EntryEditor(this, model, entry);
 		Scene scene = new Scene(entryEditor, 400, 400);
 		currentStage.setScene(scene);
 		currentStage.setTitle("Edit an Entry");
