@@ -80,7 +80,6 @@ public class EntryEditor extends GridPane {
 
 		// Submit button
 		saveButton = new Button("Save");
-		// TODO: Save button action
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {

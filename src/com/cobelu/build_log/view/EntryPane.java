@@ -58,7 +58,6 @@ public class EntryPane extends BorderPane {
 				 * https://stackoverflow.com/a/26564412
 				 */
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					// TODO: Open a new entry window
 					onEntryDoubleClick();
 				}
 			}

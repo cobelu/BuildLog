@@ -1,4 +1,4 @@
-package com.cobelu.build_log.controller;
+package com.cobelu.build_log.view;
 
 import javafx.scene.control.Alert;
 import javafx.stage.Window;
