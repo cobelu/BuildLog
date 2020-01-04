@@ -2,14 +2,18 @@ package com.cobelu.build_log.model;
 
 import java.util.List;
 
+import com.cobelu.build_log.dao_interface.EntryDaoI;
 import com.cobelu.build_log.dao_jdbc.EntryDaoJdbc;
 import com.cobelu.build_log.entity.Entry;
-import com.cobelu.build_log.dao_interface.EntryDaoI;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class EntryModel {
 
 	private EntryDaoI entryDao;
 	private Entry selectedEntry;
+	private ObservableList<String> categoriesList;
 
 	/*
 	 * Constructor
@@ -17,6 +21,9 @@ public class EntryModel {
 
 	public EntryModel() {
 		entryDao = new EntryDaoJdbc();
+		// TODO: Replace with empty for deploy
+		String[] categories = { "Wing", "Tail", "Fuselage", "Finish" };
+		categoriesList = FXCollections.observableArrayList(categories);
 	}
 
 	/*
@@ -24,7 +31,7 @@ public class EntryModel {
 	 */
 
 	public List<Entry> findAll() {
-		 return entryDao.findAll();
+		return entryDao.findAll();
 	}
 
 	public Entry find(Entry entry) {
@@ -42,7 +49,11 @@ public class EntryModel {
 	public void delete(Entry entry) {
 		entryDao.delete(entry);
 	}
-	
+
+	public void addCategory(String category) {
+		categoriesList.add(category);
+	}
+
 	/*
 	 * Getters and Setters
 	 */
@@ -51,8 +62,12 @@ public class EntryModel {
 		return selectedEntry;
 	}
 
-	public void setSelectedEntry(Entry entry) {
-		selectedEntry = entry;		
+	public ObservableList<String> getCategoriesList() {
+		return categoriesList;
 	}
-	
+
+	public void setSelectedEntry(Entry entry) {
+		selectedEntry = entry;
+	}
+
 }

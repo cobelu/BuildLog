@@ -6,11 +6,13 @@ import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.Model;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,7 +29,7 @@ public class EntryEditor extends GridPane {
 	private Model model;
 	private DatePicker datePicker;
 	private TextField minutesTextField;
-	private TextField categoryTextField;
+	private ComboBox<String> categoryComboBox;
 	private TextField titleTextField;
 	private TextField descriptionTextField;
 	private Button saveButton;
@@ -63,8 +65,9 @@ public class EntryEditor extends GridPane {
 		// Category
 		Label categoryLabel = new Label("Category:");
 		add(categoryLabel, 0, 3);
-		categoryTextField = new TextField();
-		add(categoryTextField, 1, 3);
+		ObservableList<String> categoriesList = model.getEntryModel().getCategoriesList();
+		categoryComboBox = new ComboBox<String>(categoriesList);
+		add(categoryComboBox, 1, 3);
 
 		// Title
 		Label titleLabel = new Label("Title:");
@@ -106,7 +109,7 @@ public class EntryEditor extends GridPane {
 		// Populate with the values of a given entry
 		datePicker.setValue(entry.getDate());
 		minutesTextField.setText(entry.getMinutes().toString());
-		categoryTextField.setText(entry.getCategory());
+		categoryComboBox.getSelectionModel().select(entry.getCategory());
 		titleTextField.setText(entry.getTitle());
 		descriptionTextField.setText(entry.getDescription());
 	}
@@ -145,7 +148,7 @@ public class EntryEditor extends GridPane {
 		// Harvest fields
 		LocalDate date = datePicker.getValue();
 		Integer minutes = Integer.parseInt(minutesTextField.getText());
-		String category = categoryTextField.getText();
+		String category = categoryComboBox.getSelectionModel().getSelectedItem();
 		String title = titleTextField.getText();
 		String description = descriptionTextField.getText();
 		Entry entry = new Entry(date, minutes, category, title, description);
