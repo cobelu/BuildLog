@@ -1,9 +1,13 @@
 package com.cobelu.build_log.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.cobelu.build_log.dao_interface.PictureDaoI;
+import com.cobelu.build_log.dao_jdbc.PictureDaoJdbc;
 
 /**
  * Represents a build log Entry.
@@ -23,7 +27,7 @@ public class Entry extends BaseEntity {
 	private String category;
 	private String title;
 	private String description;
-
+	private List<Picture> pictures;
 	/*
 	 * Constructors
 	 */
@@ -63,6 +67,10 @@ public class Entry extends BaseEntity {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public List<Picture> getPictures() {
+		return pictures;
 	}
 
 	/*

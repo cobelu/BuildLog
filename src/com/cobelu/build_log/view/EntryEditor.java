@@ -1,5 +1,6 @@
 package com.cobelu.build_log.view;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import com.cobelu.build_log.controller.NavigationController;
@@ -21,6 +22,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class EntryEditor extends GridPane {
 
@@ -36,6 +39,8 @@ public class EntryEditor extends GridPane {
 	private ComboBox<String> categoryComboBox;
 	private TextField titleTextField;
 	private TextArea descriptionTextArea;
+	private ObservableList<String> pictures;
+	private ListView<String> pictureList;
 	private Button addButton;
 	private Button removeButton;
 	private Button saveButton;
@@ -109,10 +114,10 @@ public class EntryEditor extends GridPane {
 		add(removeButton, 0, 8);
 
 		// List of images
-		ListView<String> list = new ListView<String>();
-		ObservableList<String> items = FXCollections.observableArrayList("Single", "Double", "Suite", "Family App");
-		list.setItems(items);
-		add(list, 1, 6, 1, 3);
+		pictureList = new ListView<String>();
+		pictures = FXCollections.observableArrayList("Single", "Double", "Suite", "Family App");
+		pictureList.setItems(pictures);
+		add(pictureList, 1, 6, 1, 3);
 
 		// Submit button
 		saveButton = new Button("Save");
@@ -152,16 +157,24 @@ public class EntryEditor extends GridPane {
 	 */
 
 	private void onAddButtonPress() {
+		Stage stage = navCon.getCurrentStage();
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
-		fileChooser.showOpenDialog(navCon.getCurrentStage());
-		// TODO: Restrict choices to JPEG, PNG, etc.
-		// TODO: Append selection to list
+		fileChooser.setTitle("Add a Picture");
+		fileChooser.getExtensionFilters()
+				.addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", ".jpeg"));
+		File selectedFile = fileChooser.showOpenDialog(stage);
+		if (selectedFile != null) {
+			System.out.println(selectedFile.toString());
+		}
+		// TODO: Convert from String to Picture
+		pictures.add(selectedFile.toString());
+		
 	}
 
 	private void onRemoveButtonPress() {
-		// TODO: Check for selected image
+		String selectedPicture = pictureList.getSelectionModel().getSelectedItem();
 		// TODO: Remove from list
+		pictures.remove(selectedPicture);
 	}
 
 	private void onSaveButtonPress() {

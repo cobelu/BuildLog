@@ -14,6 +14,7 @@ public class Model {
 
 	private EntryModel entryModel;
 	private OrderModel orderModel;
+	private PictureModel pictureModel;
 
 	/*
 	 * Constructor
@@ -22,6 +23,7 @@ public class Model {
 	public Model() {
 		entryModel = new EntryModel();
 		orderModel = new OrderModel();
+		pictureModel = new PictureModel();
 	}
 
 	/*
@@ -34,6 +36,10 @@ public class Model {
 
 	public OrderModel getOrderModel() {
 		return orderModel;
+	}
+
+	public PictureModel getPictureModel() {
+		return pictureModel;
 	}
 
 }
