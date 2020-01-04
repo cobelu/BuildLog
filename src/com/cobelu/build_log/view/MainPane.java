@@ -66,7 +66,7 @@ public class MainPane extends BorderPane {
 			alert.setTitle("Bully");
 			alert.setHeaderText(null);
 			alert.setContentText("Bully - The Builder's Logging Tool - Connor Luckett");
-			alert.showAndWait(); // Popup on press
+			alert.showAndWait(); // Pop up on press
 		});
 		help.getItems().addAll(about);
 

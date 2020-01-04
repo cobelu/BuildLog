@@ -6,6 +6,7 @@ import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.Model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,8 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
 public class EntryEditor extends GridPane {
 
@@ -32,6 +35,8 @@ public class EntryEditor extends GridPane {
 	private ComboBox<String> categoryComboBox;
 	private TextField titleTextField;
 	private TextField descriptionTextField;
+	private Button addButton;
+	private Button removeButton;
 	private Button saveButton;
 	private Button cancelButton;
 
@@ -81,6 +86,33 @@ public class EntryEditor extends GridPane {
 		descriptionTextField = new TextField();
 		add(descriptionTextField, 1, 5);
 
+		// Image selection
+		Label imagesLabel = new Label("Images:");
+		add(imagesLabel, 0, 6);
+		addButton = new Button("Add");
+		addButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onAddButtonPress();
+			}
+		});
+		add(addButton, 0, 7);
+		// Remove button
+		removeButton = new Button("Remove");
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onRemoveButtonPress();
+			}
+		});
+		add(removeButton, 0, 8);
+
+		// List of images
+		ListView<String> list = new ListView<String>();
+		ObservableList<String> items = FXCollections.observableArrayList("Single", "Double", "Suite", "Family App");
+		list.setItems(items);
+		add(list, 1, 6, 1, 3);
+
 		// Submit button
 		saveButton = new Button("Save");
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -89,7 +121,7 @@ public class EntryEditor extends GridPane {
 				onSaveButtonPress();
 			}
 		});
-		add(saveButton, 0, 6);
+		add(saveButton, 0, 9);
 
 		// Cancel button
 		cancelButton = new Button("Cancel");
@@ -99,7 +131,7 @@ public class EntryEditor extends GridPane {
 				onCancelButtonPress();
 			}
 		});
-		add(cancelButton, 1, 6);
+		add(cancelButton, 1, 9);
 	}
 
 	public EntryEditor(NavigationController stage, Model model, Entry entry) {
@@ -117,6 +149,19 @@ public class EntryEditor extends GridPane {
 	/*
 	 * Methods
 	 */
+
+	private void onAddButtonPress() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Resource File");
+		fileChooser.showOpenDialog(navCon.getCurrentStage());
+		// TODO: Restrict choices to JPEG, PNG, etc.
+		// TODO: Append selection to list
+	}
+
+	private void onRemoveButtonPress() {
+		// TODO: Check for selected image
+		// TODO: Remove from list
+	}
 
 	private void onSaveButtonPress() {
 		// Harvest the data from the fields
