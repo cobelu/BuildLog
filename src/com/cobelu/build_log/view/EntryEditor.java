@@ -122,12 +122,12 @@ public class EntryEditor extends GridPane {
 		// Harvest the data from the fields
 		Entry newEntry = harvestFields(); // TODO: Add error handling
 		// Check if it's a new Entry or if it is an update
-		if (newEntry.getId() == null) {
+		if (entry == null) {
 			// New so insert
 			model.getEntryModel().insert(newEntry);
 		} else {
 			// Update so update
-			Long id = newEntry.getId();
+			Long id = entry.getId();
 			newEntry.setId(id);
 			model.getEntryModel().update(newEntry);
 		}
