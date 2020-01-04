@@ -1,5 +1,14 @@
 package com.cobelu.build_log.dao_jdbc;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -118,9 +127,9 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		update += picture.getEntryId();
 		update += "\", ";
 		update += pictureCol;
-		update += "=";
-		update += picture.getFile();
-		update += ", ";
+		update += "=\"";
+		update += fileToBlob(picture.getFile());
+		update += "\", ";
 		update += descriptionCol;
 		update += "=\"";
 		update += picture.getDescription();
@@ -160,12 +169,94 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 			Picture picture = new Picture();
 			picture.setId(rs.getLong(idCol));
 			// TODO: Fix BLOB
-			// https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/
 			picture.setEntryId(rs.getLong(entryCol));
 			picture.setDescription(rs.getString(descriptionCol));
 			pictures.add(picture);
 		}
 		return pictures;
+	}
+
+	/**
+	 * Read the file and returns the byte array.
+	 * 
+	 * https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/
+	 * 
+	 * @param file
+	 * @return the bytes of the file
+	 */
+	private byte[] fileToBlob(File file) {
+		ByteArrayOutputStream bos = null;
+		FileInputStream fileInputStream = null;
+		try {
+			fileInputStream = new FileInputStream(file);
+			byte[] buffer = new byte[1024];
+			bos = new ByteArrayOutputStream();
+			for (int len; (len = fileInputStream.read(buffer)) != -1;) {
+				bos.write(buffer, 0, len);
+			}
+			fileInputStream.close();
+		} catch (FileNotFoundException e) {
+			System.err.println(e.getMessage());
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+		return bos != null ? bos.toByteArray() : null;
+	}
+
+	/**
+	 * read the picture file and insert into the material master table
+	 *
+	 * @param id
+	 * @param filename
+	 */
+	public void readPicture(int id, String filename) {
+		// update sql
+		String selectSQL = "SELECT picture FROM materials WHERE id=?";
+		ResultSet rs = null;
+		FileOutputStream fos = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = null;
+			pstmt = conn.prepareStatement(selectSQL);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+
+			// write binary stream into file
+			File file = new File(filename);
+			fos = new FileOutputStream(file);
+
+			System.out.println("Writing BLOB to file " + file.getAbsolutePath());
+			while (rs.next()) {
+				InputStream input = rs.getBinaryStream("picture");
+				byte[] buffer = new byte[1024];
+				while (input.read(buffer) > 0) {
+					fos.write(buffer);
+				}
+			}
+		} catch (SQLException | IOException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+				if (fos != null) {
+					fos.close();
+				}
+
+			} catch (SQLException | IOException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 
 }
