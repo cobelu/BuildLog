@@ -56,14 +56,16 @@
 	<TextField fx:id="minutesTextField" prefHeight="40"
 		GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
+
 	<!-- Add Category Label -->
 	<Label text="Category: " GridPane.columnIndex="0"
 		GridPane.rowIndex="3">
 	</Label>
-	
+
 	<!-- Add Category Combo Box -->
-	<TextField fx:id="categoryTextField" prefHeight="40"
+	<ComboBox fx:id="categoryTextField" prefHeight="40"
 		GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
 
 	<!-- Add Title Label -->
 	<Label text="Title: " GridPane.columnIndex="0"
