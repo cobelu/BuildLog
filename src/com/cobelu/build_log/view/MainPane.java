@@ -14,11 +14,11 @@ import javafx.stage.Stage;
 public class MainPane extends BorderPane {
 
 	// Awareness of the model
-	private Stage stage;
+	private BullyStage stage;
 	private Model model;
 	private EntryPane entryPane;
 
-	public MainPane(Stage stage, Model model) {
+	public MainPane(BullyStage stage, Model model) {
 		super();
 
 		this.stage = stage;
@@ -58,12 +58,12 @@ public class MainPane extends BorderPane {
 		setTop(menuBar);
 
 		// Entry Pane
-		entryPane = new EntryPane(this.stage, model.getEntryModel());
+		entryPane = new EntryPane(this.stage, model);
 		setCenter(entryPane);
 	}
 
 	private void displayNewEntryWindow() {
-		EntryEditor entryEditor = new EntryEditor(stage, model.getEntryModel());
+		EntryEditor entryEditor = new EntryEditor(stage, model);
 		Stage stage = new Stage();
 		stage.setTitle("Create an Entry");
 		stage.setScene(new Scene(entryEditor, 450, 450));

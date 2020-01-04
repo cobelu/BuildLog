@@ -3,7 +3,7 @@ package com.cobelu.build_log.view;
 import java.time.LocalDate;
 
 import com.cobelu.build_log.entity.Entry;
-import com.cobelu.build_log.model.EntryModel;
+import com.cobelu.build_log.model.Model;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 public class EntryEditor extends GridPane {
 
@@ -22,23 +21,25 @@ public class EntryEditor extends GridPane {
 	 * Fields
 	 */
 
-	private Stage stage;
+	private BullyStage stage;
 	private Entry entry;
-	private EntryModel entryModel;
+	private Model model;
 	private DatePicker datePicker;
 	private TextField minutesTextField;
 	private TextField categoryTextField;
 	private TextField titleTextField;
 	private TextField descriptionTextField;
 	private Button saveButton;
+	private Button cancelButton;
 
 	/*
 	 * Constructors
 	 */
 
-	public EntryEditor(Stage stage, EntryModel entryModel) {
+	public EntryEditor(BullyStage stage, Model model) {
 		super();
-		this.entryModel = entryModel;
+		this.stage = stage;
+		this.model = model;
 
 		// Geometry
 		setAlignment(Pos.CENTER);
@@ -82,18 +83,24 @@ public class EntryEditor extends GridPane {
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				System.out.println("Save Button Pressed!");
-				// Harvest the data from the fields
-				harvestFields(); // TODO: Add error handling
-				// Alert the model
-				entryModel.update(entry); // TODO: Fix SQL error
+				onSaveButtonPress();
 			}
 		});
 		add(saveButton, 0, 6);
+
+		// Cancel button
+		cancelButton = new Button("Cancel");
+		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onCancelButtonPress();
+			}
+		});
+		add(cancelButton, 1, 6);
 	}
 
-	public EntryEditor(Stage stage, EntryModel entryModel, Entry entry) {
-		this(stage, entryModel);
+	public EntryEditor(BullyStage stage, Model model, Entry entry) {
+		this(stage, model);
 		this.entry = entry;
 
 		// Populate with the values of a given entry
@@ -108,6 +115,18 @@ public class EntryEditor extends GridPane {
 	 * Methods
 	 */
 
+	private void onSaveButtonPress() {
+		// Harvest the data from the fields
+		harvestFields(); // TODO: Add error handling
+		// Alert the model
+		model.getEntryModel().update(entry); // TODO: Fix SQL error
+	}
+
+	private void onCancelButtonPress() {
+		// Hide the scene and go back to main stage
+		stage.openMainStage();
+	}
+
 	private void harvestFields() {
 		entry.setDate(datePicker.getValue());
 		entry.setMinutes(Integer.parseInt(minutesTextField.getText()));
@@ -120,12 +139,12 @@ public class EntryEditor extends GridPane {
 	 * Getters and Setters
 	 */
 
-	public Stage getStage() {
+	public BullyStage getStage() {
 		return stage;
 	}
 
-	public EntryModel getEntryModel() {
-		return entryModel;
+	public Model getModel() {
+		return model;
 	}
 
 	public Entry getEntry() {

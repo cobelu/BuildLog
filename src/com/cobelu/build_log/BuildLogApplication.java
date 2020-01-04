@@ -1,10 +1,10 @@
 package com.cobelu.build_log;
 
 import com.cobelu.build_log.model.Model;
+import com.cobelu.build_log.view.BullyStage;
 import com.cobelu.build_log.view.MainPane;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -18,14 +18,11 @@ public class BuildLogApplication extends Application {
 	MainPane mainPane;
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage ignoredStage) {
 		try {
 			model = new Model();
-			mainPane = new MainPane(primaryStage, model);
-			Scene scene = new Scene(mainPane, 400, 400);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Bully");
-			primaryStage.show();
+			BullyStage stage = new BullyStage(model);
+			stage.openMainStage();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

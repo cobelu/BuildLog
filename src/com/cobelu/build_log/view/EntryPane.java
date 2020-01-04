@@ -1,7 +1,7 @@
 package com.cobelu.build_log.view;
 
 import com.cobelu.build_log.entity.Entry;
-import com.cobelu.build_log.model.EntryModel;
+import com.cobelu.build_log.model.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,20 +12,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 public class EntryPane extends BorderPane {
 
-	private Stage stage;
-	private EntryModel entryModel;
+	private BullyStage stage;
+	private Model model;
 	private TableView<Entry> tableView;
 
 	@SuppressWarnings("unchecked")
-	public EntryPane(Stage stage, EntryModel entryModel) {
+	public EntryPane(BullyStage stage, Model model) {
 		super();
 
 		this.stage = stage;
-		this.entryModel = entryModel;
+		this.model = model;
 
 		// Content inside the tab
 		BorderPane borderPane = new BorderPane();
@@ -46,7 +45,7 @@ public class EntryPane extends BorderPane {
 		borderPane.setCenter(tableView);
 
 		// Populate with data
-		ObservableList<Entry> entries = FXCollections.observableList(entryModel.findAll());
+		ObservableList<Entry> entries = FXCollections.observableList(model.getEntryModel().findAll());
 		tableView.setItems(entries);
 
 		// Double click feature
@@ -61,8 +60,7 @@ public class EntryPane extends BorderPane {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					// TODO: Open a new entry window
 					Entry selectedEntry = tableView.getSelectionModel().getSelectedItem();
-					displayEntryEditor(selectedEntry, entryModel);
-					System.out.println("You selected: " + selectedEntry.toString());
+					displayEntryEditor(selectedEntry, model);
 				}
 			}
 		});
@@ -70,16 +68,16 @@ public class EntryPane extends BorderPane {
 		setCenter(borderPane);
 	}
 
-	private void displayEntryEditor(Entry entry, EntryModel entryModel) {
-		EntryEditor entryEditor = new EntryEditor(stage, entryModel, entry);
-		Stage stage = new Stage();
+	private void displayEntryEditor(Entry entry, Model model) {
+		// Stage changes scene to editing scene
+		EntryEditor entryEditor = new EntryEditor(stage, model, entry);
 		stage.setTitle("Edit an Entry");
 		stage.setScene(new Scene(entryEditor, 450, 450));
 		stage.show();
 	}
 
-	public EntryModel getEntryModel() {
-		return entryModel;
+	public Model getModel() {
+		return model;
 	}
 
 	public TableView<Entry> getTableView() {
