@@ -3,8 +3,10 @@ package com.cobelu.build_log.dao_jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.cobelu.build_log.dao_interface.EntryDaoI;
 import com.cobelu.build_log.entity.Entry;
@@ -148,6 +150,70 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		closeAfterUpdate();
 	}
 
+	public String findTotalHours() {
+		String query = "";
+		query += "SELECT SUM(";
+		query += minutesCol;
+		query += ") AS TOTAL FROM ";
+		query += entryTable;
+		query += ";";
+		ResultSet rs;
+		String prettyHours = null;
+		try {
+			rs = openAndQuery(query);
+			Integer minutes = rs.getInt("TOTAL");
+			prettyHours = prettyHoursMinutes(minutes);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAfterQuery();
+		}
+		return prettyHours;
+	}
+
+	public Map<String, String> findHoursByCategory() {
+		String query = "";
+		query += "SELECT ";
+		query += categoryCol;
+		query += ", COUNT(*) AS TOTAL FROM ";
+		query += entryTable;
+		query += ";";
+		ResultSet rs;
+		Map<String, String> hoursByCategory = new HashMap<String, String>();
+		try {
+			rs = openAndQuery(query);
+			while (rs.next()) {
+				String category = rs.getString(categoryCol);
+				Integer minutes = rs.getInt("TOTAL");
+				String prettyHours = prettyHoursMinutes(minutes);
+				hoursByCategory.put(category, prettyHours);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAfterQuery();
+		}
+		return hoursByCategory;
+	}
+
+	public Integer findNumberOfEntries() {
+		String query = "";
+		query += "SELECT COUNT(*) AS TOTAL FROM ";
+		query += entryTable;
+		query += ";";
+		ResultSet rs;
+		Integer numEntries = null;
+		try {
+			rs = openAndQuery(query);
+			numEntries = rs.getInt("TOTAL");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeAfterQuery();
+		}
+		return numEntries;
+	}
+
 	/*
 	 * Helper Methods
 	 */
@@ -172,6 +238,19 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 			entries.add(entry);
 		}
 		return entries;
+	}
+
+	private String prettyHoursMinutes(Integer minutes) {
+		// Take minutes and find the number of hours
+		Integer hours = minutes / 60;
+		// Find the number of remaining minutes
+		Integer leftoverMinutes = minutes % 60;
+		String pretty = "";
+		pretty += hours;
+		pretty += " hours, ";
+		pretty += leftoverMinutes;
+		pretty += " minutes";
+		return pretty;
 	}
 
 }
