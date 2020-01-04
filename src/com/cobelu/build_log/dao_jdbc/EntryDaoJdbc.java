@@ -20,11 +20,7 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 	private final String categoryCol = "CATEGORY";
 	private final String titleCol = "TITLE";
 	private final String descCol = "DESCRIPTION";
-
-	public EntryDaoJdbc() {
-		super();
-	}
-
+	
 	public List<Entry> findAll() {
 		List<Entry> entries = null;
 		String query = "SELECT * FROM " + entryTable + ";";
