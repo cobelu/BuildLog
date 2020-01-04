@@ -33,7 +33,7 @@ public class NavigationController {
 		currentStage.hide();
 		currentStage = new Stage();
 		EntryEditor entryEditor = new EntryEditor(this, model, entry);
-		Scene scene = new Scene(entryEditor, 400, 400);
+		Scene scene = new Scene(entryEditor, 700, 600);
 		currentStage.setScene(scene);
 		currentStage.setTitle("Edit an Entry");
 		currentStage.show();

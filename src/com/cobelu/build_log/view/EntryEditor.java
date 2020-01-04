@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -34,7 +35,7 @@ public class EntryEditor extends GridPane {
 	private TextField minutesTextField;
 	private ComboBox<String> categoryComboBox;
 	private TextField titleTextField;
-	private TextField descriptionTextField;
+	private TextArea descriptionTextArea;
 	private Button addButton;
 	private Button removeButton;
 	private Button saveButton;
@@ -83,8 +84,8 @@ public class EntryEditor extends GridPane {
 		// Description
 		Label descriptionLabel = new Label("Description:");
 		add(descriptionLabel, 0, 5);
-		descriptionTextField = new TextField();
-		add(descriptionTextField, 1, 5);
+		descriptionTextArea = new TextArea();
+		add(descriptionTextArea, 1, 5);
 
 		// Image selection
 		Label imagesLabel = new Label("Images:");
@@ -143,7 +144,7 @@ public class EntryEditor extends GridPane {
 		minutesTextField.setText(entry.getMinutes().toString());
 		categoryComboBox.getSelectionModel().select(entry.getCategory());
 		titleTextField.setText(entry.getTitle());
-		descriptionTextField.setText(entry.getDescription());
+		descriptionTextArea.setText(entry.getDescription());
 	}
 
 	/*
@@ -195,7 +196,7 @@ public class EntryEditor extends GridPane {
 		Integer minutes = Integer.parseInt(minutesTextField.getText());
 		String category = categoryComboBox.getSelectionModel().getSelectedItem();
 		String title = titleTextField.getText();
-		String description = descriptionTextField.getText();
+		String description = descriptionTextArea.getText();
 		Entry entry = new Entry(date, minutes, category, title, description);
 		return entry;
 	}
