@@ -1,6 +1,6 @@
 package com.cobelu.build_log.view;
 
-import com.cobelu.build_log.controller.BullyStage;
+import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.Model;
 
@@ -16,15 +16,15 @@ import javafx.scene.layout.BorderPane;
 
 public class EntryPane extends BorderPane {
 
-	private BullyStage stage;
+	private NavigationController navCon;
 	private Model model;
 	private TableView<Entry> tableView;
 
 	@SuppressWarnings("unchecked")
-	public EntryPane(BullyStage stage, Model model) {
+	public EntryPane(NavigationController navCon, Model model) {
 		super();
 
-		this.stage = stage;
+		this.navCon = navCon;
 		this.model = model;
 
 		// Content inside the tab
@@ -70,11 +70,10 @@ public class EntryPane extends BorderPane {
 	}
 
 	private void displayEntryEditor(Entry entry, Model model) {
+		// Update selected entry in model
+		model.getEntryModel().setSelectedEntry(entry);
 		// Stage changes scene to editing scene
-		EntryEditor entryEditor = new EntryEditor(stage, model, entry);
-		stage.setTitle("Edit an Entry");
-		stage.setScene(new Scene(entryEditor, 450, 450));
-		stage.show();
+		navCon.openEntryEditorStage();
 	}
 
 	public Model getModel() {

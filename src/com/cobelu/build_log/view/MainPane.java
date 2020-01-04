@@ -1,9 +1,8 @@
 package com.cobelu.build_log.view;
 
-import com.cobelu.build_log.controller.BullyStage;
+import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.model.Model;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Menu;
@@ -15,14 +14,14 @@ import javafx.stage.Stage;
 public class MainPane extends BorderPane {
 
 	// Awareness of the model
-	private BullyStage stage;
+	private NavigationController navCon;
 	private Model model;
 	private EntryPane entryPane;
 
-	public MainPane(BullyStage stage, Model model) {
+	public MainPane(NavigationController navCon, Model model) {
 		super();
 
-		this.stage = stage;
+		this.navCon = navCon;
 		this.model = model;
 
 		// Menu bar
@@ -33,7 +32,7 @@ public class MainPane extends BorderPane {
 		// New entry
 		MenuItem newEntry = new MenuItem("New Entry");
 		newEntry.setOnAction(e -> {
-			displayNewEntryWindow(); // Create a new entry on press
+			onEntryDoubleClick(); // Create a new entry on press
 		});
 		// Quit
 		MenuItem quit = new MenuItem("Quit");
@@ -59,24 +58,20 @@ public class MainPane extends BorderPane {
 		setTop(menuBar);
 
 		// Entry Pane
-		entryPane = new EntryPane(this.stage, model);
+		entryPane = new EntryPane(this.navCon, this.model);
 		setCenter(entryPane);
 	}
 
-	private void displayNewEntryWindow() {
-		EntryEditor entryEditor = new EntryEditor(stage, model);
-		Stage stage = new Stage();
-		stage.setTitle("Create an Entry");
-		stage.setScene(new Scene(entryEditor, 450, 450));
-		stage.show();
+	private void onEntryDoubleClick() {
+		navCon.openEntryEditorStage();
 	}
 
 	public Model getModel() {
 		return model;
 	}
 
-	public Stage getStage() {
-		return stage;
+	public NavigationController getNavigationController() {
+		return navCon;
 	}
 
 }

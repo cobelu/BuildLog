@@ -2,7 +2,7 @@ package com.cobelu.build_log.view;
 
 import java.time.LocalDate;
 
-import com.cobelu.build_log.controller.BullyStage;
+import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.Model;
 
@@ -22,7 +22,7 @@ public class EntryEditor extends GridPane {
 	 * Fields
 	 */
 
-	private BullyStage stage;
+	private NavigationController navCon;
 	private Entry entry;
 	private Model model;
 	private DatePicker datePicker;
@@ -37,9 +37,9 @@ public class EntryEditor extends GridPane {
 	 * Constructors
 	 */
 
-	public EntryEditor(BullyStage stage, Model model) {
+	public EntryEditor(NavigationController stage, Model model) {
 		super();
-		this.stage = stage;
+		this.navCon = stage;
 		this.model = model;
 
 		// Geometry
@@ -100,7 +100,7 @@ public class EntryEditor extends GridPane {
 		add(cancelButton, 1, 6);
 	}
 
-	public EntryEditor(BullyStage stage, Model model, Entry entry) {
+	public EntryEditor(NavigationController stage, Model model, Entry entry) {
 		this(stage, model);
 		this.entry = entry;
 
@@ -130,12 +130,12 @@ public class EntryEditor extends GridPane {
 			model.getEntryModel().update(newEntry);
 		}
 		// Hide the scene and go back to main stage
-		stage.openMainStage();
+		navCon.openMainStage();
 	}
 
 	private void onCancelButtonPress() {
 		// Hide the scene and go back to main stage
-		stage.openMainStage();
+		navCon.openMainStage();
 	}
 
 	private Entry harvestFields() {
@@ -157,8 +157,8 @@ public class EntryEditor extends GridPane {
 	 * Getters and Setters
 	 */
 
-	public BullyStage getStage() {
-		return stage;
+	public NavigationController getStage() {
+		return navCon;
 	}
 
 	public Model getModel() {

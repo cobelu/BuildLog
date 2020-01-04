@@ -50,9 +50,9 @@ public class EntryModel {
 	public Entry getSelectedEntry() {
 		return selectedEntry;
 	}
-	
+
 	public void setSelectedEntry(Entry entry) {
-		selectedEntry = entry;
+		selectedEntry = entry;		
 	}
 	
 }

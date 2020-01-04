@@ -7,18 +7,19 @@ import com.cobelu.build_log.view.MainPane;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class BullyStage extends Stage {
+public class NavigationController {
 
 	private Model model;
 	private Stage currentStage;
 
-	public BullyStage(Model model) {
+	public NavigationController(Model model) {
 		super();
 		this.model = model;
 		currentStage = new Stage();
 	}
 
 	public void openMainStage() {
+		System.out.println("Opening a main stage");
 		currentStage.hide();
 		currentStage = new Stage();
 		MainPane mainPane = new MainPane(this, model);
@@ -29,6 +30,7 @@ public class BullyStage extends Stage {
 	}
 
 	public void openEntryEditorStage() {
+		System.out.println("Opening an editor stage");
 		currentStage.hide();
 		currentStage = new Stage();
 		EntryEditor entryEditor = new EntryEditor(this, model);

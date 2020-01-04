@@ -1,6 +1,6 @@
 package com.cobelu.build_log;
 
-import com.cobelu.build_log.controller.BullyStage;
+import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.model.Model;
 import com.cobelu.build_log.view.MainPane;
 
@@ -21,7 +21,7 @@ public class BuildLogApplication extends Application {
 	public void start(Stage ignoredStage) {
 		try {
 			model = new Model();
-			BullyStage stage = new BullyStage(model);
+			NavigationController stage = new NavigationController(model);
 			stage.openMainStage();
 		} catch (Exception e) {
 			e.printStackTrace();
