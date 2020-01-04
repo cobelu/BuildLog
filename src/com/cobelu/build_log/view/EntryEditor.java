@@ -119,7 +119,9 @@ public class EntryEditor extends GridPane {
 		// Harvest the data from the fields
 		harvestFields(); // TODO: Add error handling
 		// Alert the model
-		model.getEntryModel().update(entry); // TODO: Fix SQL error
+		model.getEntryModel().update(entry);
+		// Hide the scene and go back to main stage
+		stage.openMainStage();
 	}
 
 	private void onCancelButtonPress() {
