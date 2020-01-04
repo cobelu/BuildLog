@@ -1,7 +1,7 @@
 package com.cobelu.build_log;
 
+import com.cobelu.build_log.controller.BullyStage;
 import com.cobelu.build_log.model.Model;
-import com.cobelu.build_log.view.BullyStage;
 import com.cobelu.build_log.view.MainPane;
 
 import javafx.application.Application;

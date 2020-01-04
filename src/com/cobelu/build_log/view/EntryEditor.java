@@ -2,6 +2,7 @@ package com.cobelu.build_log.view;
 
 import java.time.LocalDate;
 
+import com.cobelu.build_log.controller.BullyStage;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.model.Model;
 
@@ -117,9 +118,17 @@ public class EntryEditor extends GridPane {
 
 	private void onSaveButtonPress() {
 		// Harvest the data from the fields
-		harvestFields(); // TODO: Add error handling
-		// Alert the model
-		model.getEntryModel().update(entry);
+		Entry newEntry = harvestFields(); // TODO: Add error handling
+		// Check if it's a new Entry or if it is an update
+		if (newEntry.getId() == null) {
+			// New so insert
+			model.getEntryModel().insert(newEntry);
+		} else {
+			// Update so update
+			Long id = newEntry.getId();
+			newEntry.setId(id);
+			model.getEntryModel().update(newEntry);
+		}
 		// Hide the scene and go back to main stage
 		stage.openMainStage();
 	}
@@ -129,12 +138,19 @@ public class EntryEditor extends GridPane {
 		stage.openMainStage();
 	}
 
-	private void harvestFields() {
-		entry.setDate(datePicker.getValue());
-		entry.setMinutes(Integer.parseInt(minutesTextField.getText()));
-		entry.setCategory(categoryTextField.getText());
-		entry.setTitle(titleTextField.getText());
-		entry.setDescription(descriptionTextField.getText());
+	private Entry harvestFields() {
+		/*
+		 * We MUST create a new entry with the same ID as the old one. Solely editing
+		 * the entry will not work because of the case of adding a new entry.
+		 */
+		// Harvest fields
+		LocalDate date = datePicker.getValue();
+		Integer minutes = Integer.parseInt(minutesTextField.getText());
+		String category = categoryTextField.getText();
+		String title = titleTextField.getText();
+		String description = descriptionTextField.getText();
+		Entry entry = new Entry(date, minutes, category, title, description);
+		return entry;
 	}
 
 	/*

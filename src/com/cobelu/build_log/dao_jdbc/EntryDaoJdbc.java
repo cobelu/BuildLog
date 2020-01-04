@@ -69,8 +69,8 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		insert += "INSERT INTO ";
 		insert += entryTable;
 		insert += "(";
-		insert += idCol;
-		insert += ", ";
+//		insert += idCol;
+//		insert += ", ";
 		insert += dateCol;
 		insert += ", ";
 		insert += minutesCol;
@@ -80,9 +80,9 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		insert += titleCol;
 		insert += ", ";
 		insert += descCol;
-		insert += ") VALUES(";
-		insert += entry.getId().toString();
-		insert += ", \"";
+		insert += ") VALUES(\"";
+//		insert += entry.getId().toString();
+//		insert += ", \"";
 		insert += entry.getDate().toString();
 		insert += "\", ";
 		insert += entry.getMinutes().toString();
@@ -102,10 +102,10 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		update += "UPDATE ";
 		update += entryTable;
 		update += " SET ";
-		update += idCol;
-		update += "=";
-		update += entry.getId();
-		update += ", ";
+//		update += idCol;
+//		update += "=";
+//		update += entry.getId();
+//		update += ", ";
 		update += dateCol;
 		update += "=\"";
 		update += entry.getDate().toString();
