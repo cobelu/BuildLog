@@ -23,7 +23,7 @@ public class NavigationController {
 		currentStage.hide();
 		currentStage = new Stage();
 		MainPane mainPane = new MainPane(this, model);
-		Scene scene = new Scene(mainPane, 400, 400);
+		Scene scene = new Scene(mainPane, 800, 400);
 		currentStage.setScene(scene);
 		currentStage.setTitle("Bully");
 		currentStage.show();
