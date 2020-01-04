@@ -33,12 +33,21 @@ public class MainPane extends BorderPane {
 		newEntry.setOnAction(e -> {
 			onNewEntryClick(); // Create a new entry on press
 		});
+		// Report
+		MenuItem report = new MenuItem("Generate Report");
+		report.setOnAction(e -> {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Report");
+			alert.setHeaderText(null);
+			alert.setContentText("Total: " + model.getEntryModel().findTotalHours());
+			alert.showAndWait(); // Popup on press
+		});
 		// Quit
 		MenuItem quit = new MenuItem("Quit");
 		quit.setOnAction(e -> {
 			System.exit(0); // Quit on press
 		});
-		file.getItems().addAll(newEntry, quit);
+		file.getItems().addAll(newEntry, report, quit);
 
 		// Help menu items
 		final Menu help = new Menu("Help");

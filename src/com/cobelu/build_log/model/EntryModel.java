@@ -1,6 +1,7 @@
 package com.cobelu.build_log.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cobelu.build_log.dao_interface.EntryDaoI;
 import com.cobelu.build_log.dao_jdbc.EntryDaoJdbc;
@@ -48,6 +49,18 @@ public class EntryModel {
 
 	public void delete(Entry entry) {
 		entryDao.delete(entry);
+	}
+
+	public Integer findNumberOfEntries() {
+		return entryDao.findNumberOfEntries();
+	}
+
+	public Map<String, String> findHoursByCategory() {
+		return entryDao.findHoursByCategory();
+	}
+
+	public String findTotalHours() {
+		return entryDao.findTotalHours();
 	}
 
 	public void addCategory(String category) {

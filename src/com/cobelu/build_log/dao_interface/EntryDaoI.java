@@ -1,6 +1,7 @@
 package com.cobelu.build_log.dao_interface;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cobelu.build_log.entity.Entry;
 
@@ -40,5 +41,11 @@ public interface EntryDaoI {
 	 * @param Entry The Entry to be removed
 	 */
 	public void delete(Entry entry);
+	
+	public Integer findNumberOfEntries();
+	
+	public Map<String, String> findHoursByCategory();
+	
+	public String findTotalHours();
 
 }
