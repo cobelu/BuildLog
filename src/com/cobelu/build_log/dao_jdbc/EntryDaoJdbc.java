@@ -175,8 +175,12 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 		String query = "";
 		query += "SELECT ";
 		query += categoryCol;
-		query += ", COUNT(*) AS TOTAL FROM ";
+		query += ", SUM( ";
+		query += minutesCol;
+		query += ") AS TOTAL FROM ";
 		query += entryTable;
+		query += " GROUP BY ";
+		query += categoryCol;
 		query += ";";
 		ResultSet rs;
 		Map<String, String> hoursByCategory = new HashMap<String, String>();

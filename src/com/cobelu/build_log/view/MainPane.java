@@ -1,5 +1,7 @@
 package com.cobelu.build_log.view;
 
+import java.util.Map;
+
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.model.Model;
 
@@ -39,7 +41,13 @@ public class MainPane extends BorderPane {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Report");
 			alert.setHeaderText(null);
-			alert.setContentText("Total: " + model.getEntryModel().findTotalHours());
+			String contextText = "Number of Entries: " + model.getEntryModel().findNumberOfEntries() + "\n";
+			contextText += "Total Time: " + model.getEntryModel().findTotalHours() + "\n";
+			Map<String, String> categoryTimes = model.getEntryModel().findHoursByCategory();
+			for (Map.Entry<String, String> mapElement : categoryTimes.entrySet()) {
+				contextText += "Total Time for " + mapElement.getKey() + ": " + mapElement.getValue() + "\n";
+			}
+			alert.setContentText(contextText);
 			alert.showAndWait(); // Popup on press
 		});
 		// Quit
