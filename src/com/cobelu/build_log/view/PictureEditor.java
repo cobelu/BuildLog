@@ -22,8 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class PictureEditor extends GridPane {
 
@@ -33,9 +33,10 @@ public class PictureEditor extends GridPane {
 	private Picture picture;
 	private Model model;
 	private Button uploadButton;
-	private Button removeButton;
 	private ImageView imageView;
 	private TextField descriptionTextField;
+	private Button okButton;
+	private Button cancelButton;
 
 	public PictureEditor(NavigationController stage, Model model) {
 		super();
@@ -50,7 +51,7 @@ public class PictureEditor extends GridPane {
 
 		// Image Preview
 		Label imageLabel = new Label("Image: ");
-		add(imageLabel, 0, 0);
+		add(imageLabel, 1, 1);
 
 		// Upload Button
 		uploadButton = new Button("Upload");
@@ -60,29 +61,39 @@ public class PictureEditor extends GridPane {
 				onUploadButtonPress();
 			}
 		});
-		add(uploadButton, 1, 0);
-
-		// Remove Button
-		removeButton = new Button("remove");
-		removeButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				onRemoveButtonPress();
-			}
-		});
-		add(removeButton, 2, 0);
+		add(uploadButton, 1, 2);
 
 		// Image View
 		// TODO: Implement image
 		Image image = new Image(PLACEHOLDER);
 		imageView = new ImageView(image);
-		add(imageView, 0, 1);
+		add(imageView, 0, 0, 1, 6);
 
 		// Description
 		Label descriptionLabel = new Label("Description: ");
-		add(descriptionLabel, 2, 1);
+		add(descriptionLabel, 1, 4);
 		descriptionTextField = new TextField();
-		add(descriptionTextField, 2, 2);
+		add(descriptionTextField, 1, 5);
+
+		// OK Button
+		okButton = new Button("OK");
+		okButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onOkButtonPress();
+			}
+		});
+		add(okButton, 1, 6);
+
+		// Cancel Button
+		cancelButton = new Button("Cancel");
+		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onCancelButtonPress();
+			}
+		});
+		add(cancelButton, 2, 6);
 
 	}
 
@@ -106,13 +117,27 @@ public class PictureEditor extends GridPane {
 				.addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", ".jpeg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
 		if (selectedFile != null) {
-			BufferedImage image = fileToBufferedImage(selectedFile);
+			Image image = fileToImage(selectedFile);
+			// TODO: Crop image to fit inside view
+			imageView.setImage(image);
 		}
 	}
 
-	private void onRemoveButtonPress() {
-		System.out.println("Remove"); // TODO: Remove
+	private void onOkButtonPress() {
+		// The associated entry is the current entry we are editing
+		Long entryId = model.getEntryModel().getSelectedEntry().getId();
+		// Get the image from the view
+		BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
+		// Get the description from the text field
+		String description = descriptionTextField.getText();
+		// Add new picture to the list of pictures
+		Picture picture = new Picture(entryId, bufferedImage, description);
+		model.getPictureModel().insert(picture);
+	}
 
+	private void onCancelButtonPress() {
+		// Go back to the last menu
+		navCon.openEntryEditorStage(model.getEntryModel().getSelectedEntry());
 	}
 
 	private BufferedImage fileToBufferedImage(File file) {
@@ -124,6 +149,20 @@ public class PictureEditor extends GridPane {
 			e.printStackTrace();
 		}
 		return img;
+	}
+
+	private Image fileToImage(File file) {
+		BufferedImage bufferedImage = fileToBufferedImage(file);
+		Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+		return image;
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Picture getPicture() {
+		return picture;
 	}
 
 }

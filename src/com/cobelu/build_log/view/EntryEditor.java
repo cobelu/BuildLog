@@ -1,18 +1,12 @@
 package com.cobelu.build_log.view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-
-import javax.imageio.ImageIO;
 
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.entity.Picture;
 import com.cobelu.build_log.model.Model;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,9 +21,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 
 public class EntryEditor extends GridPane {
 
@@ -45,8 +36,8 @@ public class EntryEditor extends GridPane {
 	private ComboBox<String> categoryComboBox;
 	private TextField titleTextField;
 	private TextArea descriptionTextArea;
-	private ObservableList<String> pictures;
-	private ListView<String> pictureList;
+	private ObservableList<Picture> pictures;
+	private ListView<Picture> pictureList;
 	private Button addButton;
 	private Button removeButton;
 	private Button saveButton;
@@ -120,8 +111,7 @@ public class EntryEditor extends GridPane {
 		add(removeButton, 0, 8);
 
 		// List of images
-		pictureList = new ListView<String>();
-		pictures = FXCollections.observableArrayList("Single", "Double", "Suite", "Family App");
+		pictureList = new ListView<Picture>();
 		pictureList.setItems(pictures);
 		pictureList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -171,14 +161,14 @@ public class EntryEditor extends GridPane {
 	 */
 
 	private void onAddButtonPress() {
-			navCon.openNewPictureStage();
+		navCon.openNewPictureStage();
 
 		// TODO: Insert Picture
 		// model.getPictureModel().insert(picture);
 	}
 
 	private void onRemoveButtonPress() {
-		String selectedPicture = pictureList.getSelectionModel().getSelectedItem();
+		Picture selectedPicture = pictureList.getSelectionModel().getSelectedItem();
 		// TODO: Ask if sure
 		// TODO: Remove from list
 		pictures.remove(selectedPicture);
