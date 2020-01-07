@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
+import com.cobelu.build_log.entity.Picture;
 import com.cobelu.build_log.model.Model;
 
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -121,6 +123,14 @@ public class EntryEditor extends GridPane {
 		pictureList = new ListView<String>();
 		pictures = FXCollections.observableArrayList("Single", "Double", "Suite", "Family App");
 		pictureList.setItems(pictures);
+		pictureList.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					onPictureListDoublePress();
+				}
+			}
+		});
 		add(pictureList, 1, 6, 1, 3);
 
 		// Submit button
@@ -168,17 +178,28 @@ public class EntryEditor extends GridPane {
 				.addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", ".jpeg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
 		if (selectedFile != null) {
-			System.out.println(selectedFile.toString());
+			BufferedImage image = fileToBufferedImage(selectedFile);
+			navCon.openNewPictureStage();
 		}
-		BufferedImage image = fileToBufferedImage(selectedFile);
+
 		// TODO: Insert Picture
 		// model.getPictureModel().insert(picture);
 	}
 
 	private void onRemoveButtonPress() {
 		String selectedPicture = pictureList.getSelectionModel().getSelectedItem();
+		// TODO: Ask if sure
 		// TODO: Remove from list
 		pictures.remove(selectedPicture);
+	}
+
+	private void onPictureListDoublePress() {
+		// TODO: Write this method
+		// Get selected picture from the list
+		// Picture picture = pictureList.getSelectionModel().getSelectedItem();
+		Picture picture = new Picture(); // TODO: Remove
+		// Open a picture editor for the selected picture
+		navCon.openPictureEditorStage(picture);
 	}
 
 	private void onSaveButtonPress() {
@@ -217,7 +238,7 @@ public class EntryEditor extends GridPane {
 		Entry entry = new Entry(date, minutes, category, title, description);
 		return entry;
 	}
-	
+
 	private BufferedImage fileToBufferedImage(File file) {
 		// https://docs.oracle.com/javase/tutorial/2d/images/loadimage.html
 		BufferedImage img = null;
