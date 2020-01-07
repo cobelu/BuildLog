@@ -13,5 +13,9 @@ public class AlertHelper {
 		alert.initOwner(owner);
 		alert.show();
 	}
-	
+
+	public static void askIfSure(String wantTo) {
+		showAlert(Alert.AlertType.CONFIRMATION, null, "Are you sure?", wantTo);
+	}
+
 }

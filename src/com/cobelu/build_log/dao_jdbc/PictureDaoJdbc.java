@@ -108,10 +108,11 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		insert += ") VALUES(";
 		insert += picture.getEntryId();
 		insert += ", ";
-		insert += imageToBlob(picture.getImage());
+		insert += bufferdImageToBlob(picture.getImage());
 		insert += ", \"";
 		insert += picture.getDescription();
 		insert += "\");";
+		System.out.println(insert);
 		openAndUpdate(insert);
 		closeAfterUpdate();
 	}
@@ -128,7 +129,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		update += "\", ";
 		update += pictureCol;
 		update += "=\"";
-		update += imageToBlob(picture.getImage());
+		update += bufferdImageToBlob(picture.getImage());
 		update += "\", ";
 		update += descriptionCol;
 		update += "=\"";
@@ -183,7 +184,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		return image;
 	}
 
-	private Blob imageToBlob(BufferedImage image) {
+	private Blob bufferdImageToBlob(BufferedImage image) {
 		Blob blob = null;
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();

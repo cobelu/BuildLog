@@ -170,8 +170,9 @@ public class EntryEditor extends GridPane {
 	private void onRemoveButtonPress() {
 		Picture selectedPicture = pictureList.getSelectionModel().getSelectedItem();
 		// TODO: Ask if sure
-		// TODO: Remove from list
-		pictures.remove(selectedPicture);
+		if (selectedPicture != null) {
+			pictures.remove(selectedPicture);
+		}
 	}
 
 	private void onPictureListDoublePress() {
