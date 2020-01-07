@@ -171,16 +171,7 @@ public class EntryEditor extends GridPane {
 	 */
 
 	private void onAddButtonPress() {
-		Stage stage = navCon.getCurrentStage();
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Add a Picture");
-		fileChooser.getExtensionFilters()
-				.addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", ".jpeg"));
-		File selectedFile = fileChooser.showOpenDialog(stage);
-		if (selectedFile != null) {
-			BufferedImage image = fileToBufferedImage(selectedFile);
 			navCon.openNewPictureStage();
-		}
 
 		// TODO: Insert Picture
 		// model.getPictureModel().insert(picture);
@@ -237,17 +228,6 @@ public class EntryEditor extends GridPane {
 		String description = descriptionTextArea.getText();
 		Entry entry = new Entry(date, minutes, category, title, description);
 		return entry;
-	}
-
-	private BufferedImage fileToBufferedImage(File file) {
-		// https://docs.oracle.com/javase/tutorial/2d/images/loadimage.html
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return img;
 	}
 
 	/*
