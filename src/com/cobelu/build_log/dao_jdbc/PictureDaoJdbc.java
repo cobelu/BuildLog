@@ -1,18 +1,18 @@
 package com.cobelu.build_log.dao_jdbc;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.sql.rowset.serial.SerialBlob;
 
 import com.cobelu.build_log.dao_interface.PictureDaoI;
 import com.cobelu.build_log.entity.Entry;
@@ -33,7 +33,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		ResultSet rs;
 		try {
 			rs = openAndQuery(query);
-			pictures = parsePicturesFrom(rs);
+			pictures = parsePicturesFromResultSet(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -56,7 +56,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		ResultSet rs;
 		try {
 			rs = openAndQuery(query);
-			pictures = parsePicturesFrom(rs);
+			pictures = parsePicturesFromResultSet(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IndexOutOfBoundsException e) {
@@ -82,7 +82,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		ResultSet rs;
 		try {
 			rs = openAndQuery(query);
-			pictures = parsePicturesFrom(rs);
+			pictures = parsePicturesFromResultSet(rs);
 			picture = pictures.get(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,7 +108,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		insert += ") VALUES(";
 		insert += picture.getEntryId();
 		insert += ", ";
-		insert += picture.getFile();
+		insert += imageToBlob(picture.getImage());
 		insert += ", \"";
 		insert += picture.getDescription();
 		insert += "\");";
@@ -128,7 +128,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		update += "\", ";
 		update += pictureCol;
 		update += "=\"";
-		update += fileToBlob(picture.getFile());
+		update += imageToBlob(picture.getImage());
 		update += "\", ";
 		update += descriptionCol;
 		update += "=\"";
@@ -156,107 +156,44 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		closeAfterUpdate();
 	}
 
-	/**
-	 * Parses pictures obtained from a ResultSet.
-	 * 
-	 * @param rset A ResultSet full of pictures
-	 * @return A List of Picture objects
-	 * @throws SQLException
-	 */
-	private List<Picture> parsePicturesFrom(ResultSet rs) throws SQLException {
+	private List<Picture> parsePicturesFromResultSet(ResultSet rs) {
 		List<Picture> pictures = new LinkedList<Picture>();
-		while (rs.next()) {
-			Picture picture = new Picture();
-			picture.setId(rs.getLong(idCol));
-			// TODO: Fix BLOB
-			picture.setEntryId(rs.getLong(entryCol));
-			picture.setDescription(rs.getString(descriptionCol));
+		try {
+			// TODO: Fix ID
+			Long entryId = rs.getLong(entryCol);
+			BufferedImage image = blobToImage(rs.getBlob(pictureCol));
+			String description = rs.getString(descriptionCol);
+			Picture picture = new Picture(entryId, image, description);
 			pictures.add(picture);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return pictures;
 	}
 
-	/**
-	 * Read the file and returns the byte array.
-	 * 
-	 * https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/
-	 * 
-	 * @param file
-	 * @return the bytes of the file
-	 */
-	private byte[] fileToBlob(File file) {
-		ByteArrayOutputStream bos = null;
-		FileInputStream fileInputStream = null;
+	private BufferedImage blobToImage(Blob blob) {
+		InputStream in;
+		BufferedImage image = null;
 		try {
-			fileInputStream = new FileInputStream(file);
-			byte[] buffer = new byte[1024];
-			bos = new ByteArrayOutputStream();
-			for (int len; (len = fileInputStream.read(buffer)) != -1;) {
-				bos.write(buffer, 0, len);
-			}
-			fileInputStream.close();
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage());
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
+			in = blob.getBinaryStream();
+			image = ImageIO.read(in);
+		} catch (SQLException | IOException e) {
+			e.printStackTrace();
 		}
-		return bos != null ? bos.toByteArray() : null;
+		return image;
 	}
 
-	/**
-	 * read the picture file and insert into the material master table
-	 *
-	 * @param id
-	 * @param filename
-	 */
-	public void readPicture(int id, String filename) {
-		// update sql
-		String selectSQL = "SELECT picture FROM materials WHERE id=?";
-		ResultSet rs = null;
-		FileOutputStream fos = null;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
+	private Blob imageToBlob(BufferedImage image) {
+		Blob blob = null;
 		try {
-			conn = null;
-			pstmt = conn.prepareStatement(selectSQL);
-			pstmt.setInt(1, id);
-			rs = pstmt.executeQuery();
-
-			// write binary stream into file
-			File file = new File(filename);
-			fos = new FileOutputStream(file);
-
-			System.out.println("Writing BLOB to file " + file.getAbsolutePath());
-			while (rs.next()) {
-				InputStream input = rs.getBinaryStream("picture");
-				byte[] buffer = new byte[1024];
-				while (input.read(buffer) > 0) {
-					fos.write(buffer);
-				}
-			}
-		} catch (SQLException | IOException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-				if (fos != null) {
-					fos.close();
-				}
-
-			} catch (SQLException | IOException e) {
-				System.out.println(e.getMessage());
-			}
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(image, "jpg", baos);
+			byte[] imageByteArray = baos.toByteArray();
+			blob = new SerialBlob(imageByteArray);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
 		}
+		return blob;
 	}
 
 }

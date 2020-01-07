@@ -1,6 +1,6 @@
 package com.cobelu.build_log.entity;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
 
 /**
  * Represents a JPG picture to be parsed from a blob of bytes in the database.
@@ -14,7 +14,7 @@ public class Picture extends BaseEntity {
 	 */
 
 	private Long entryId;
-	private File file;
+	private BufferedImage image;
 	private String description;
 
 	/*
@@ -25,47 +25,47 @@ public class Picture extends BaseEntity {
 		super();
 	}
 
-	public Picture(Long entryId, File file, String description) {
+	public Picture(Long entryId, BufferedImage image, String description) {
 		this();
 		this.entryId = entryId;
-		this.file = file;
+		this.image = image;
 		this.description = description;
 	}
 
 	/*
 	 * Getters and Setters
 	 */
-	
+
 	public Long getEntryId() {
 		return entryId;
 	}
 
-	public File getFile() {
-		return file;
+	public BufferedImage getImage() {
+		return image;
 	}
 
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setEntryId(Long entryId) {
 		this.entryId = entryId;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+	public void setImage(BufferedImage image) {
+		this.image = image;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/*
 	 * To String
 	 */
 	@Override
 	public String toString() {
-		return file.toString();
+		return description;
 	}
 
 }

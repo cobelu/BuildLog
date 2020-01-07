@@ -1,7 +1,11 @@
 package com.cobelu.build_log.view;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
+
+import javax.imageio.ImageIO;
 
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
@@ -166,9 +170,9 @@ public class EntryEditor extends GridPane {
 		if (selectedFile != null) {
 			System.out.println(selectedFile.toString());
 		}
-		// TODO: Convert from String to Picture
-		pictures.add(selectedFile.toString());
-		
+		BufferedImage image = fileToBufferedImage(selectedFile);
+		// TODO: Insert Picture
+		// model.getPictureModel().insert(picture);
 	}
 
 	private void onRemoveButtonPress() {
@@ -212,6 +216,17 @@ public class EntryEditor extends GridPane {
 		String description = descriptionTextArea.getText();
 		Entry entry = new Entry(date, minutes, category, title, description);
 		return entry;
+	}
+	
+	private BufferedImage fileToBufferedImage(File file) {
+		// https://docs.oracle.com/javase/tutorial/2d/images/loadimage.html
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return img;
 	}
 
 	/*
