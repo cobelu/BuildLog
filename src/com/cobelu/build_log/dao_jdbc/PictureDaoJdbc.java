@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -95,24 +96,16 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 
 	@Override
 	public void insert(Picture picture) {
-		// String prepare = String.format("u1=%s;u2=%s;u3=%s;u4=%s;", u1, u2, u3, u4);
-		String insert = "";
-		insert += "INSERT INTO ";
-		insert += pictureTable;
-		insert += "(";
-		insert += entryCol;
-		insert += ", ";
-		insert += pictureCol;
-		insert += ", ";
-		insert += descriptionCol;
-		insert += ") VALUES(";
-		insert += picture.getEntryId();
-		insert += ", ";
-		insert += bufferdImageToBlob(picture.getImage());
-		insert += ", \"";
-		insert += picture.getDescription();
-		insert += "\");";
-		System.out.println(insert);
+		String insert = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?);", pictureTable, entryCol,
+				pictureCol, descriptionCol);
+		PreparedStatement pstmt = prepareStatement(insert);
+		try {
+			pstmt.setLong(1, picture.getEntryId());
+			pstmt.setBlob(2, bufferdImageToBlob(picture.getImage()));
+			pstmt.setString(3, picture.getDescription());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		openAndUpdate(insert);
 		closeAfterUpdate();
 	}

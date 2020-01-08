@@ -65,7 +65,7 @@ public class Picture extends BaseEntity {
 	 */
 	@Override
 	public String toString() {
-		return description;
+		return String.format("Picture: {entrydD: %d, description: %s}", entryId, description);
 	}
 
 }

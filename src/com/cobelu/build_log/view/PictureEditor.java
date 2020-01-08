@@ -132,6 +132,7 @@ public class PictureEditor extends GridPane {
 		String description = descriptionTextField.getText();
 		// Add new picture to the list of pictures
 		Picture picture = new Picture(entryId, bufferedImage, description);
+		System.out.println(picture.toString());
 		model.getPictureModel().insert(picture);
 	}
 

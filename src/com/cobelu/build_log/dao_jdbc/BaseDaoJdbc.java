@@ -71,7 +71,12 @@ public class BaseDaoJdbc {
 	public PreparedStatement prepareStatement(String sql) {
 		PreparedStatement preparedStatement = null;
 		try {
+			Class.forName(DB_DRIVER);
+			conn = DriverManager.getConnection(DB_URL);
+			stmt = conn.createStatement();
 			preparedStatement = conn.prepareStatement(sql);
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
