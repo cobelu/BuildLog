@@ -18,60 +18,25 @@ public class OrderDaoJdbc extends BaseDaoJdbc implements OrderDaoI {
 	private final String costCol = "COST";
 
 	public List<Order> findAll() {
-		List<Order> orders = null;
-		String query = "SELECT * FROM " + orderTable + ";";
-		ResultSet rs;
-		try {
-			rs = openAndQuery(query);
-			orders = parseOrdersFrom(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeAfterQuery();
-		}
-		return orders;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public Order find(Order order) {
-		String query = "";
-		query += "SELECT * FROM ";
-		query += orderTable;
-		query += " WHERE ";
-		query += idCol;
-		query += "=";
-		query += order.getId();
-		query += ";";
-		List<Order> orders = null;
-		Order rtnOrder = null;
-		ResultSet rs;
-		try {
-			rs = openAndQuery(query);
-			orders = parseOrdersFrom(rs);
-			order = orders.get(0);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
-		} finally {
-			closeAfterQuery();
-		}
-		return rtnOrder;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public void insert(Order order) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void update(Order order) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void delete(Order order) {
-		String update = "DELETE FROM " + orderTable + " ";
-		update += "WHERE " + idCol + "=" + order.getId() + ";";
-		openAndUpdate(update);
+		// TODO Auto-generated method stub
 	}
 
 	/*

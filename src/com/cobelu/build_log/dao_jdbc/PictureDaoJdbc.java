@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,129 +29,129 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 
 	@Override
 	public List<Picture> findAll() {
+		String query = String.format("SELECT * FROM %s;", pictureTable);
 		List<Picture> pictures = null;
-		String query = "SELECT * FROM " + pictureTable + ";";
-		ResultSet rs;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
-			pictures = parsePicturesFromResultSet(rs);
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			pictures = parsePicturesFrom(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, pstmt, rs);
 		}
 		return pictures;
 	}
 
 	@Override
 	public List<Picture> findAllByEntry(Entry entry) {
-		String query = "";
-		query += "SELECT * FROM ";
-		query += pictureTable;
-		query += " WHERE ";
-		query += entryCol;
-		query += "=";
-		query += entry.getId();
-		query += ";";
+		String query = String.format("SELECT * FROM %s WHERE %s=?;", pictureTable, entryCol);
 		List<Picture> pictures = null;
-		ResultSet rs;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
-			pictures = parsePicturesFromResultSet(rs);
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, entry.getId());
+			rs = pstmt.executeQuery();
+			pictures = parsePicturesFrom(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, pstmt, rs);
 		}
 		return pictures;
 	}
 
 	@Override
 	public Picture find(Picture picture) {
-		String query = "";
-		query += "SELECT * FROM ";
-		query += pictureTable;
-		query += " WHERE ";
-		query += idCol;
-		query += "=";
-		query += picture.getId();
-		query += ";";
-		List<Picture> pictures = null;
-		Picture rtnEntry = null;
-		ResultSet rs;
+		String query = String.format("SELECT * FROM %s WHERE %s=?;", pictureTable, idCol);
+		Picture foundPicture = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
-			pictures = parsePicturesFromResultSet(rs);
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, picture.getId());
+			rs = pstmt.executeQuery();
+			List<Picture> pictures = parsePicturesFrom(rs);
 			picture = pictures.get(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, pstmt, rs);
 		}
-		return rtnEntry;
+		return foundPicture;
 	}
 
 	@Override
 	public void insert(Picture picture) {
-		String insert = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?);", pictureTable, entryCol,
+		String query = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?);", pictureTable, entryCol,
 				pictureCol, descriptionCol);
-		PreparedStatement pstmt = prepareStatement(insert);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
 			pstmt.setLong(1, picture.getEntryId());
 			pstmt.setBlob(2, bufferdImageToBlob(picture.getImage()));
 			pstmt.setString(3, picture.getDescription());
+			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
 		}
-		openAndUpdate(insert);
-		closeAfterUpdate();
 	}
 
 	@Override
 	public void update(Picture picture) {
-		String update = "";
-		update += "UPDATE ";
-		update += pictureTable;
-		update += " SET ";
-		update += entryCol;
-		update += "=";
-		update += picture.getEntryId();
-		update += "\", ";
-		update += pictureCol;
-		update += "=\"";
-		update += bufferdImageToBlob(picture.getImage());
-		update += "\", ";
-		update += descriptionCol;
-		update += "=\"";
-		update += picture.getDescription();
-		update += "\" WHERE ";
-		update += idCol;
-		update += "=";
-		update += picture.getId();
-		update += ";";
-		openAndUpdate(update);
-		closeAfterUpdate();
+		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?) WHERE %s=?;", pictureTable, entryCol, pictureCol,
+				descriptionCol, idCol);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, picture.getEntryId());
+			pstmt.setBlob(2, bufferdImageToBlob(picture.getImage()));
+			pstmt.setString(3, picture.getDescription());
+			pstmt.setLong(4, picture.getId());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
 	}
 
 	@Override
 	public void delete(Picture picture) {
-		String delete = "";
-		delete += "DELETE FROM ";
-		delete += pictureTable;
-		delete += " WHERE ";
-		delete += idCol;
-		delete += "=";
-		delete += picture.getId();
-		delete += ";";
-		openAndUpdate(delete);
-		closeAfterUpdate();
+		String query = String.format("DELETE FROM %s WHERE %s=?;", pictureTable, idCol);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, picture.getId());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
 	}
 
-	private List<Picture> parsePicturesFromResultSet(ResultSet rs) {
+	private List<Picture> parsePicturesFrom(ResultSet rs) {
 		List<Picture> pictures = new LinkedList<Picture>();
 		try {
 			// TODO: Fix ID

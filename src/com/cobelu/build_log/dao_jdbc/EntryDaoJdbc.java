@@ -1,7 +1,10 @@
 package com.cobelu.build_log.dao_jdbc;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,187 +23,166 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 	private final String categoryCol = "CATEGORY";
 	private final String titleCol = "TITLE";
 	private final String descCol = "DESCRIPTION";
-	
+
 	public List<Entry> findAll() {
+		String query = String.format("SELECT * FROM %s;", entryTable);
 		List<Entry> entries = null;
-		String query = "SELECT * FROM " + entryTable + ";";
-		ResultSet rs;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
 			entries = parseEntriesFrom(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, pstmt, rs);
 		}
 		return entries;
 	}
 
 	public Entry find(Entry entry) {
-		String query = "";
-		query += "SELECT * FROM ";
-		query += entryTable;
-		query += " WHERE ";
-		query += idCol;
-		query += "=";
-		query += entry.getId();
-		query += ";";
-		List<Entry> entries = null;
-		Entry rtnEntry = null;
-		ResultSet rs;
+		String query = String.format("SELECT * FROM %s WHERE %s=?;", entryTable, idCol);
+		Entry foundEntry = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
-			entries = parseEntriesFrom(rs);
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, entry.getId());
+			rs = pstmt.executeQuery();
+			List<Entry> entries = parseEntriesFrom(rs);
 			entry = entries.get(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, pstmt, rs);
 		}
-		return rtnEntry;
+		return foundEntry;
 	}
 
 	public void insert(Entry entry) {
-		String insert = "";
-		insert += "INSERT INTO ";
-		insert += entryTable;
-		insert += "(";
-		insert += dateCol;
-		insert += ", ";
-		insert += minutesCol;
-		insert += ", ";
-		insert += categoryCol;
-		insert += ", ";
-		insert += titleCol;
-		insert += ", ";
-		insert += descCol;
-		insert += ") VALUES(\"";
-		insert += entry.getDate().toString();
-		insert += "\", ";
-		insert += entry.getMinutes().toString();
-		insert += ", \"";
-		insert += entry.getCategory();
-		insert += "\", \"";
-		insert += entry.getTitle();
-		insert += "\", \"";
-		insert += entry.getDescription();
-		insert += "\");";
-		openAndUpdate(insert);
-		closeAfterUpdate();
+		String query = String.format("INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?);", entryTable, dateCol,
+				minutesCol, categoryCol, titleCol, descCol);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, entry.getDate().toString());
+			pstmt.setInt(2, entry.getMinutes());
+			pstmt.setString(3, entry.getCategory());
+			pstmt.setString(4, entry.getTitle());
+			pstmt.setString(5, entry.getDescription());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
 	}
 
 	public void update(Entry entry) {
-		String update = "";
-		update += "UPDATE ";
-		update += entryTable;
-		update += " SET ";
-		update += dateCol;
-		update += "=\"";
-		update += entry.getDate().toString();
-		update += "\", ";
-		update += minutesCol;
-		update += "=";
-		update += entry.getMinutes().toString();
-		update += ", ";
-		update += categoryCol;
-		update += "=\"";
-		update += entry.getCategory();
-		update += "\", ";
-		update += titleCol;
-		update += "=\"";
-		update += entry.getTitle();
-		update += "\", ";
-		update += descCol;
-		update += "=\"";
-		update += entry.getDescription();
-		update += "\" WHERE ";
-		update += idCol;
-		update += "=";
-		update += entry.getId();
-		update += ";";
-		openAndUpdate(update);
-		closeAfterUpdate();
+		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?) WHERE %s=?;", entryTable, dateCol, minutesCol,
+				categoryCol, titleCol, descCol);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, entry.getDate().toString());
+			pstmt.setInt(2, entry.getMinutes());
+			pstmt.setString(3, entry.getCategory());
+			pstmt.setString(4, entry.getTitle());
+			pstmt.setString(5, entry.getDescription());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
 	}
 
 	public void delete(Entry entry) {
-		String delete = "";
-		delete += "DELETE FROM ";
-		delete += entryTable;
-		delete += " WHERE ";
-		delete += idCol;
-		delete += "=";
-		delete += entry.getId();
-		delete += ";";
-		openAndUpdate(delete);
-		closeAfterUpdate();
+		String query = String.format("DELETE FROM %s WHERE %s=?;", entryTable, idCol);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, entry.getId());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
 	}
 
 	public String findTotalHours() {
-		String query = "";
-		query += "SELECT SUM(";
-		query += minutesCol;
-		query += ") AS TOTAL FROM ";
-		query += entryTable;
-		query += ";";
-		ResultSet rs;
+		String query = String.format("SELECT SUM(%s) AS TOTAL FROM %s;", minutesCol, entryTable);
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 		String prettyHours = null;
 		try {
-			rs = openAndQuery(query);
+			conn = connect();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
 			Integer minutes = rs.getInt("TOTAL");
 			prettyHours = prettyHoursMinutes(minutes);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, stmt, rs);
 		}
 		return prettyHours;
 	}
 
 	public Map<String, String> findHoursByCategory() {
-		String query = "";
-		query += "SELECT ";
-		query += categoryCol;
-		query += ", SUM( ";
-		query += minutesCol;
-		query += ") AS TOTAL FROM ";
-		query += entryTable;
-		query += " GROUP BY ";
-		query += categoryCol;
-		query += ";";
-		ResultSet rs;
+		String query = String.format("SELECT %s, SUM(%s) AS TOTAL FROM %s GROUP BY %s;", categoryCol, minutesCol,
+				entryTable, categoryCol);
 		Map<String, String> hoursByCategory = new HashMap<String, String>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
-			while (rs.next()) {
-				String category = rs.getString(categoryCol);
-				Integer minutes = rs.getInt("TOTAL");
-				String prettyHours = prettyHoursMinutes(minutes);
-				hoursByCategory.put(category, prettyHours);
-			}
+			conn = connect();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			String category = rs.getString(categoryCol);
+			Integer minutes = rs.getInt("TOTAL");
+			String prettyHours = prettyHoursMinutes(minutes);
+			hoursByCategory.put(category, prettyHours);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, stmt, rs);
 		}
 		return hoursByCategory;
 	}
 
 	public Integer findNumberOfEntries() {
-		String query = "";
-		query += "SELECT COUNT(*) AS TOTAL FROM ";
-		query += entryTable;
-		query += ";";
-		ResultSet rs;
+		String query = String.format("SELECT COUNT(*) AS TOTAL FROM %s;", entryTable);
 		Integer numEntries = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 		try {
-			rs = openAndQuery(query);
+			conn = connect();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
 			numEntries = rs.getInt("TOTAL");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeAfterQuery();
+			close(conn, stmt, rs);
 		}
 		return numEntries;
 	}
