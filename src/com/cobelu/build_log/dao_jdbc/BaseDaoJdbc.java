@@ -3,6 +3,7 @@ package com.cobelu.build_log.dao_jdbc;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -65,6 +66,16 @@ public class BaseDaoJdbc {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public PreparedStatement prepareStatement(String sql) {
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return preparedStatement;
 	}
 
 	/**

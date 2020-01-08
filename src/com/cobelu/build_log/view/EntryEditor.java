@@ -176,10 +176,8 @@ public class EntryEditor extends GridPane {
 	}
 
 	private void onPictureListDoublePress() {
-		// TODO: Write this method
 		// Get selected picture from the list
-		// Picture picture = pictureList.getSelectionModel().getSelectedItem();
-		Picture picture = new Picture(); // TODO: Remove
+		Picture picture = pictureList.getSelectionModel().getSelectedItem();
 		// Open a picture editor for the selected picture
 		navCon.openPictureEditorStage(picture);
 	}

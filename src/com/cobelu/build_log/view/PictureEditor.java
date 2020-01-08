@@ -38,9 +38,9 @@ public class PictureEditor extends GridPane {
 	private Button okButton;
 	private Button cancelButton;
 
-	public PictureEditor(NavigationController stage, Model model) {
+	public PictureEditor(NavigationController navCon, Model model) {
 		super();
-		this.navCon = stage;
+		this.navCon = navCon;
 		this.model = model;
 
 		// Geometry

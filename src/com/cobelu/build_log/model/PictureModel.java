@@ -13,7 +13,6 @@ public class PictureModel {
 	 * Fields
 	 */
 
-	private Entry entry;
 	private PictureDaoI pictureDao;
 	private Picture selectedPicture;
 
@@ -45,5 +44,13 @@ public class PictureModel {
 	/*
 	 * Getters and Setters
 	 */
+
+	public Picture getSelectedPicture() {
+		return selectedPicture;
+	}
+
+	public void setSelectedPicture(Picture selectedPicture) {
+		this.selectedPicture = selectedPicture;
+	}
 
 }

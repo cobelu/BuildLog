@@ -2,7 +2,6 @@ package com.cobelu.build_log.dao_jdbc;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -96,6 +95,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 
 	@Override
 	public void insert(Picture picture) {
+		// String prepare = String.format("u1=%s;u2=%s;u3=%s;u4=%s;", u1, u2, u3, u4);
 		String insert = "";
 		insert += "INSERT INTO ";
 		insert += pictureTable;

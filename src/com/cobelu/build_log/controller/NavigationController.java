@@ -57,7 +57,7 @@ public class NavigationController {
 		PictureEditor pictureEditor = new PictureEditor(this, model, picture);
 		Scene scene = new Scene(pictureEditor, 700, 600);
 		currentStage.setScene(scene);
-		currentStage.setTitle("Edit an Entry");
+		currentStage.setTitle("Edit a Picture");
 		currentStage.show();
 	}
 
@@ -67,7 +67,7 @@ public class NavigationController {
 		PictureEditor pictureEditor = new PictureEditor(this, model);
 		Scene scene = new Scene(pictureEditor, 700, 600);
 		currentStage.setScene(scene);
-		currentStage.setTitle("Edit an Entry");
+		currentStage.setTitle("Add a Picture");
 		currentStage.show();
 	}
 
