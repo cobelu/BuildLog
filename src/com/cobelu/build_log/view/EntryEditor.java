@@ -2,6 +2,7 @@ package com.cobelu.build_log.view;
 
 import java.time.LocalDate;
 
+import com.cobelu.build_log.controller.ControllerHelper;
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.entity.Picture;
@@ -116,7 +117,7 @@ public class EntryEditor extends GridPane {
 		pictureList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+				if (ControllerHelper.isDoubleClick(event) && isValidSelection()) {
 					onPictureListDoublePress();
 				}
 			}
@@ -217,6 +218,10 @@ public class EntryEditor extends GridPane {
 		String description = descriptionTextArea.getText();
 		Entry entry = new Entry(date, minutes, category, title, description);
 		return entry;
+	}
+
+	private boolean isValidSelection() {
+		return pictureList.getSelectionModel().getSelectedItem() != null;
 	}
 
 	/*
