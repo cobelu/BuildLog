@@ -12,7 +12,6 @@ import com.cobelu.build_log.dao_interface.CategoryDaoI;
 public class CategoryDaoJdbc extends BaseDaoJdbc implements CategoryDaoI {
 
 	private final String categoryTable = "CATEGORY";
-	// private final String idCol = "ID"; // Later for possible object encapsulation
 	private final String categoryCol = "CATEGORY";
 
 	@Override
