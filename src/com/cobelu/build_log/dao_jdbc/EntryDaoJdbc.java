@@ -87,8 +87,8 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 	}
 
 	public void update(Entry entry) {
-		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?) WHERE %s=?;", entryTable, dateCol, minutesCol,
-				categoryCol, titleCol, descCol);
+		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?;", entryTable, dateCol,
+				minutesCol, categoryCol, titleCol, descCol, idCol);
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -100,6 +100,7 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 			pstmt.setString(3, entry.getCategory());
 			pstmt.setString(4, entry.getTitle());
 			pstmt.setString(5, entry.getDescription());
+			pstmt.setLong(6, entry.getId());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

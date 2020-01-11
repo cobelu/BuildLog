@@ -113,8 +113,7 @@ public class PictureEditor extends GridPane {
 		Stage stage = navCon.getCurrentStage();
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Add a Picture");
-		fileChooser.getExtensionFilters()
-				.addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", ".jpeg", "*.gif"));
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.jpg", ".jpeg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
 		if (selectedFile != null) {
 			Image image = fileToImage(selectedFile);
