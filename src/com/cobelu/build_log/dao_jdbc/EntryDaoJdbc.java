@@ -55,7 +55,7 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 			pstmt.setLong(1, entry.getId());
 			rs = pstmt.executeQuery();
 			List<Entry> entries = parseEntriesFrom(rs);
-			entry = entries.get(0);
+			foundEntry = entries.get(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
