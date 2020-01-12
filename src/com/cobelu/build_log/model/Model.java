@@ -1,5 +1,7 @@
 package com.cobelu.build_log.model;
 
+import java.io.File;
+
 /**
  * The head Model of the BullyApplication. Holds onto daos, and all information
  * pertaining to the app.
@@ -12,6 +14,7 @@ public class Model {
 	 * Fields
 	 */
 
+	private File rootDirectory;
 	private EntryModel entryModel;
 	private PictureModel pictureModel;
 
@@ -20,6 +23,7 @@ public class Model {
 	 */
 
 	public Model() {
+		rootDirectory = new File("~/");
 		entryModel = new EntryModel();
 		pictureModel = new PictureModel();
 	}
@@ -27,6 +31,10 @@ public class Model {
 	/*
 	 * Getters and Setters
 	 */
+
+	public File getRootDirectory() {
+		return rootDirectory;
+	}
 
 	public EntryModel getEntryModel() {
 		return entryModel;

@@ -33,27 +33,21 @@ public class MainPane extends BorderPane {
 		// New entry
 		MenuItem newEntry = new MenuItem("New Entry");
 		newEntry.setOnAction(e -> {
-			onNewEntryClick(); // Create a new entry on press
+			onNewEntryPress(); // Create a new entry on press
+		});
+		MenuItem newProject = new MenuItem("New Project");
+		newProject.setOnAction(e -> {
+			onNewProjectPress(); // Create a new entry on press
 		});
 		// Report
 		MenuItem report = new MenuItem("Generate Report");
 		report.setOnAction(e -> {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Report");
-			alert.setHeaderText(null);
-			String contextText = "Number of Entries: " + model.getEntryModel().findNumberOfEntries() + "\n";
-			contextText += "Total Time: " + model.getEntryModel().findTotalHours() + "\n";
-			Map<String, String> categoryTimes = model.getEntryModel().findHoursByCategory();
-			for (Map.Entry<String, String> mapElement : categoryTimes.entrySet()) {
-				contextText += "Total Time for " + mapElement.getKey() + ": " + mapElement.getValue() + "\n";
-			}
-			alert.setContentText(contextText);
-			alert.showAndWait(); // Popup on press
+			onReportPress();
 		});
 		// Quit
 		MenuItem quit = new MenuItem("Quit");
 		quit.setOnAction(e -> {
-			System.exit(0); // Quit on press
+			onQuitPress();
 		});
 		file.getItems().addAll(newEntry, report, quit);
 
@@ -62,11 +56,7 @@ public class MainPane extends BorderPane {
 		// About
 		MenuItem about = new MenuItem("About");
 		about.setOnAction(e -> {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Bully");
-			alert.setHeaderText(null);
-			alert.setContentText("Bully - The Builder's Logging Tool - Connor Luckett");
-			alert.showAndWait(); // Pop up on press
+			onAboutPress();
 		});
 		help.getItems().addAll(about);
 
@@ -78,8 +68,39 @@ public class MainPane extends BorderPane {
 		setCenter(entryPane);
 	}
 
-	private void onNewEntryClick() {
+	private void onNewEntryPress() {
 		navCon.openNewEntryStage();
+	}
+
+	private void onNewProjectPress() {
+		// TODO: Do this
+		System.out.println("New Project Button Pressed!");
+	}
+
+	private void onReportPress() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Report");
+		alert.setHeaderText(null);
+		String contextText = "Number of Entries: " + model.getEntryModel().findNumberOfEntries() + "\n";
+		contextText += "Total Time: " + model.getEntryModel().findTotalHours() + "\n";
+		Map<String, String> categoryTimes = model.getEntryModel().findHoursByCategory();
+		for (Map.Entry<String, String> mapElement : categoryTimes.entrySet()) {
+			contextText += "Total Time for " + mapElement.getKey() + ": " + mapElement.getValue() + "\n";
+		}
+		alert.setContentText(contextText);
+		alert.showAndWait(); // Popup on press
+	}
+
+	private void onQuitPress() {
+		System.exit(0); // Quit on press
+	}
+
+	private void onAboutPress() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Bully");
+		alert.setHeaderText(null);
+		alert.setContentText("Bully - The Builder's Logging Tool - Connor Luckett");
+		alert.showAndWait(); // Pop up on press
 	}
 
 	public Model getModel() {

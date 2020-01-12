@@ -11,7 +11,7 @@ import org.apache.commons.dbutils.DbUtils;
 public class BaseDaoJdbc {
 
 	protected final String DB_DRIVER = "org.sqlite.JDBC";
-	protected final String DB_PREFIX = "jdbc:sqlite:src/resources/databases/";
+	protected final String DB_PREFIX = "jdbc:sqlite:src/resources/databases/"; // TODO: Dynamic
 	protected final String DATABASE_NAME = "buildlog.db"; // TODO: Dynamic
 	protected final String DB_URL = DB_PREFIX + DATABASE_NAME;
 
