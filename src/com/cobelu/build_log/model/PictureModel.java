@@ -1,5 +1,6 @@
 package com.cobelu.build_log.model;
 
+import java.io.File;
 import java.util.List;
 
 import com.cobelu.build_log.dao_interface.PictureDaoI;
@@ -14,14 +15,13 @@ public class PictureModel {
 	 */
 
 	private PictureDaoI pictureDao;
-	private Picture selectedPicture;
+	private File selectedFile;
 
 	/*
 	 * Constructor
 	 */
 
 	public PictureModel() {
-		// TODO Auto-generated constructor stub
 		pictureDao = new PictureDaoJdbc();
 	}
 
@@ -45,12 +45,12 @@ public class PictureModel {
 	 * Getters and Setters
 	 */
 
-	public Picture getSelectedPicture() {
-		return selectedPicture;
+	public File getSelectedPicture() {
+		return selectedFile;
 	}
 
-	public void setSelectedPicture(Picture selectedPicture) {
-		this.selectedPicture = selectedPicture;
+	public void setSelectedFile(File selectedFile) {
+		this.selectedFile = selectedFile;
 	}
 
 }

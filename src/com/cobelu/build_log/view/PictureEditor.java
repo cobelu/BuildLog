@@ -1,16 +1,11 @@
 package com.cobelu.build_log.view;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Picture;
 import com.cobelu.build_log.model.Model;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -32,6 +27,7 @@ public class PictureEditor extends GridPane {
 	private NavigationController navCon;
 	private Picture picture;
 	private Model model;
+	private FileChooser fileChooser;
 	private Button uploadButton;
 	private ImageView imageView;
 	private TextField descriptionTextField;
@@ -111,14 +107,18 @@ public class PictureEditor extends GridPane {
 	private void onUploadButtonPress() {
 		System.out.println("Upload"); // TODO: Remove
 		Stage stage = navCon.getCurrentStage();
-		FileChooser fileChooser = new FileChooser();
+		fileChooser = new FileChooser();
 		fileChooser.setTitle("Add a Picture");
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.jpg", ".jpeg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
 		if (selectedFile != null) {
-			Image image = fileToImage(selectedFile);
+			/*
+			 * NOTE: The file is restricted to image files by the file chooser extension
+			 * filters.
+			 */
+			model.getPictureModel().setSelectedFile(selectedFile);
 			// TODO: Crop image to fit inside view
-			imageView.setImage(image);
+			imageView.setImage(new Image(selectedFile.toURI().toString()));
 		}
 	}
 
@@ -127,34 +127,19 @@ public class PictureEditor extends GridPane {
 		// The associated entry is the current entry we are editing
 		Long entryId = model.getEntryModel().getSelectedEntry().getId();
 		// Get the image from the view
-		BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
+		File file = model.getPictureModel().getSelectedPicture();
 		// Get the description from the text field
 		String description = descriptionTextField.getText();
+		// Create a picture
+		Picture picture = new Picture(entryId, file, description);
 		// Add new picture to the list of pictures
-		System.out.println(picture.toString());
-		// model.getPictureModel().insert(picture);
+		model.getPictureModel().insert(picture);
+		System.out.println(picture.toString()); // TODO: Remove
 	}
 
 	private void onCancelButtonPress() {
 		// Go back to the last menu
 		navCon.openEntryEditorStage(model.getEntryModel().getSelectedEntry());
-	}
-
-	private BufferedImage fileToBufferedImage(File file) {
-		// https://docs.oracle.com/javase/tutorial/2d/images/loadimage.html
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return img;
-	}
-
-	private Image fileToImage(File file) {
-		BufferedImage bufferedImage = fileToBufferedImage(file);
-		Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-		return image;
 	}
 
 	/*
