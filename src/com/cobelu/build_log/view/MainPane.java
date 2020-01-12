@@ -33,11 +33,15 @@ public class MainPane extends BorderPane {
 		// New entry
 		MenuItem newEntry = new MenuItem("New Entry");
 		newEntry.setOnAction(e -> {
-			onNewEntryPress(); // Create a new entry on press
+			onNewEntryPress();
 		});
 		MenuItem newProject = new MenuItem("New Project");
 		newProject.setOnAction(e -> {
-			onNewProjectPress(); // Create a new entry on press
+			onNewProjectPress();
+		});
+		MenuItem editProject = new MenuItem("Edit Project");
+		editProject.setOnAction(e -> {
+			onEditProjectPress();
 		});
 		// Report
 		MenuItem report = new MenuItem("Generate Report");
@@ -75,6 +79,9 @@ public class MainPane extends BorderPane {
 	private void onNewProjectPress() {
 		// TODO: Do this
 		System.out.println("New Project Button Pressed!");
+		// Check for a location and name
+		// Create the location and DB with appropriate logic
+		// Ask for a save if needed
 	}
 
 	private void onReportPress() {
@@ -93,6 +100,10 @@ public class MainPane extends BorderPane {
 
 	private void onQuitPress() {
 		System.exit(0); // Quit on press
+	}
+
+	private void onEditProjectPress() {
+		System.out.println("Edit Project Pressed");
 	}
 
 	private void onAboutPress() {
