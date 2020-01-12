@@ -102,7 +102,7 @@ public class PictureEditor extends GridPane {
 		this.picture = picture;
 
 		// Load picture's image into view
-		Image image = SwingFXUtils.toFXImage(picture.getImage(), null);
+		Image image = new Image(picture.getFile().toURI().toString());
 		imageView = new ImageView(image);
 		// Update text field with given picture's description
 		descriptionTextField.setText(picture.getDescription());
@@ -123,6 +123,7 @@ public class PictureEditor extends GridPane {
 	}
 
 	private void onOkButtonPress() {
+		// TODO: Fix
 		// The associated entry is the current entry we are editing
 		Long entryId = model.getEntryModel().getSelectedEntry().getId();
 		// Get the image from the view
@@ -130,9 +131,8 @@ public class PictureEditor extends GridPane {
 		// Get the description from the text field
 		String description = descriptionTextField.getText();
 		// Add new picture to the list of pictures
-		Picture picture = new Picture(entryId, bufferedImage, description);
 		System.out.println(picture.toString());
-		model.getPictureModel().insert(picture);
+		// model.getPictureModel().insert(picture);
 	}
 
 	private void onCancelButtonPress() {

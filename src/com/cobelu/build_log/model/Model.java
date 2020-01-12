@@ -13,7 +13,6 @@ public class Model {
 	 */
 
 	private EntryModel entryModel;
-	private OrderModel orderModel;
 	private PictureModel pictureModel;
 
 	/*
@@ -22,7 +21,6 @@ public class Model {
 
 	public Model() {
 		entryModel = new EntryModel();
-		orderModel = new OrderModel();
 		pictureModel = new PictureModel();
 	}
 
@@ -32,10 +30,6 @@ public class Model {
 
 	public EntryModel getEntryModel() {
 		return entryModel;
-	}
-
-	public OrderModel getOrderModel() {
-		return orderModel;
 	}
 
 	public PictureModel getPictureModel() {
