@@ -22,6 +22,10 @@ import javafx.stage.Stage;
 
 public class PictureEditor extends GridPane {
 
+	/*
+	 * Fields
+	 */
+
 	public final String PLACEHOLDER = "resources/placeholder.jpg";
 
 	private NavigationController navCon;
@@ -33,6 +37,10 @@ public class PictureEditor extends GridPane {
 	private TextField descriptionTextField;
 	private Button okButton;
 	private Button cancelButton;
+
+	/*
+	 * Constructors
+	 */
 
 	public PictureEditor(NavigationController navCon, Model model) {
 		super();
@@ -90,7 +98,6 @@ public class PictureEditor extends GridPane {
 			}
 		});
 		add(cancelButton, 2, 6);
-
 	}
 
 	public PictureEditor(NavigationController stage, Model model, Picture picture) {
@@ -103,6 +110,10 @@ public class PictureEditor extends GridPane {
 		// Update text field with given picture's description
 		descriptionTextField.setText(picture.getDescription());
 	}
+
+	/*
+	 * Helpers
+	 */
 
 	private void onUploadButtonPress() {
 		System.out.println("Upload"); // TODO: Remove

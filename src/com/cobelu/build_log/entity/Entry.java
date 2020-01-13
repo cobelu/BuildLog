@@ -44,7 +44,7 @@ public class Entry extends BaseEntity {
 	}
 
 	/*
-	 * Getters
+	 * Getters and Setters
 	 */
 
 	public LocalDate getDate() {
@@ -70,10 +70,6 @@ public class Entry extends BaseEntity {
 	public List<Picture> getPictures() {
 		return pictures;
 	}
-
-	/*
-	 * Setters
-	 */
 
 	public void setDate(LocalDate date) {
 		this.date = date;

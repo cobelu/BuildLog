@@ -12,6 +12,10 @@ import javafx.collections.ObservableList;
 
 public class EntryModel {
 
+	/*
+	 * Fields
+	 */
+
 	private EntryDaoI entryDao;
 	private Entry selectedEntry;
 	private ObservableList<String> categoriesList;

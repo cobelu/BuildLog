@@ -16,6 +16,10 @@ import com.cobelu.build_log.entity.Entry;
 
 public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 
+	/*
+	 * Fields
+	 */
+
 	private final String entryTable = "ENTRY";
 	private final String idCol = "ID";
 	private final String dateCol = "DATE";
@@ -23,6 +27,10 @@ public class EntryDaoJdbc extends BaseDaoJdbc implements EntryDaoI {
 	private final String categoryCol = "CATEGORY";
 	private final String titleCol = "TITLE";
 	private final String descCol = "DESCRIPTION";
+
+	/*
+	 * Methods
+	 */
 
 	public List<Entry> findAll() {
 		String query = String.format("SELECT * FROM %s;", entryTable);

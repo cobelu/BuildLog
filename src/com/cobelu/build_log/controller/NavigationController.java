@@ -14,14 +14,26 @@ import javafx.stage.Stage;
 
 public class NavigationController {
 
+	/*
+	 * Fields
+	 */
+
 	private Model model;
 	private Stage currentStage;
+
+	/*
+	 * Constructor
+	 */
 
 	public NavigationController(Model model) {
 		super();
 		this.model = model;
 		currentStage = new Stage();
 	}
+
+	/*
+	 * Methods
+	 */
 
 	public void openMainStage() {
 		MainPane mainPane = new MainPane(this, model);
@@ -70,6 +82,10 @@ public class NavigationController {
 		currentStage.setTitle(title);
 		currentStage.show();
 	}
+
+	/*
+	 * Getters and Setters
+	 */
 
 	public Stage getCurrentStage() {
 		return currentStage;

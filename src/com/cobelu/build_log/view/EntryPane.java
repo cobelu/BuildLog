@@ -15,11 +15,18 @@ import javafx.scene.layout.BorderPane;
 
 public class EntryPane extends BorderPane {
 
+	/*
+	 * Fields
+	 */
+
 	private NavigationController navCon;
 	private Model model;
 	private TableView<Entry> tableView;
 
-	@SuppressWarnings("unchecked")
+	/*
+	 * Constructor
+	 */
+
 	public EntryPane(NavigationController navCon, Model model) {
 		super();
 
@@ -31,15 +38,19 @@ public class EntryPane extends BorderPane {
 		tableView = new TableView<Entry>();
 		TableColumn<Entry, String> dateCol = new TableColumn<Entry, String>("Date");
 		dateCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("date"));
+		tableView.getColumns().add(dateCol);
 		TableColumn<Entry, String> minutesCol = new TableColumn<Entry, String>("Minutes");
 		minutesCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("minutes"));
+		tableView.getColumns().add(minutesCol);
 		TableColumn<Entry, String> categoryCol = new TableColumn<Entry, String>("Category");
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("category"));
+		tableView.getColumns().add(categoryCol);
 		TableColumn<Entry, String> titleCol = new TableColumn<Entry, String>("Title");
 		titleCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("title"));
+		tableView.getColumns().add(titleCol);
 		TableColumn<Entry, String> descCol = new TableColumn<Entry, String>("Description");
 		descCol.setCellValueFactory(new PropertyValueFactory<Entry, String>("description"));
-		tableView.getColumns().addAll(dateCol, minutesCol, categoryCol, titleCol, descCol);
+		tableView.getColumns().add(descCol);
 
 		// Add table view to pane
 		borderPane.setCenter(tableView);
@@ -66,6 +77,10 @@ public class EntryPane extends BorderPane {
 		setCenter(borderPane);
 	}
 
+	/*
+	 * Helpers
+	 */
+
 	private void onEntryDoubleClick() {
 		// Get selected entry that was double clicked
 		Entry selectedEntry = tableView.getSelectionModel().getSelectedItem();
@@ -79,6 +94,10 @@ public class EntryPane extends BorderPane {
 		// Stage changes scene to editing scene
 		navCon.openEntryEditorStage(entry);
 	}
+
+	/*
+	 * Getters and Setters
+	 */
 
 	public Model getModel() {
 		return model;

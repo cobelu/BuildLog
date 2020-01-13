@@ -6,7 +6,15 @@ import com.cobelu.build_log.dao_interface.CategoryDaoI;
 
 public class CategoryModel {
 
+	/*
+	 * Fields
+	 */
+
 	private CategoryDaoI categoryDao;
+
+	/*
+	 * Methods
+	 */
 
 	public List<String> findAll() {
 		return categoryDao.findAll();

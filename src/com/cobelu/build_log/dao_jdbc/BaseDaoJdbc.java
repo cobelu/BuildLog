@@ -10,10 +10,18 @@ import org.apache.commons.dbutils.DbUtils;
 
 public class BaseDaoJdbc {
 
+	/*
+	 * Fields
+	 */
+
 	protected final String DB_DRIVER = "org.sqlite.JDBC";
 	protected final String DB_PREFIX = "jdbc:sqlite:src/resources/databases/"; // TODO: Dynamic
-	protected final String DATABASE_NAME = "buildlog.db"; // TODO: Dynamic
-	protected final String DB_URL = DB_PREFIX + DATABASE_NAME;
+	protected final String DB_NAME = "buildlog.db"; // TODO: Dynamic
+	protected final String DB_URL = DB_PREFIX + DB_NAME;
+
+	/*
+	 * Constructor
+	 */
 
 	public Connection connect() {
 		Connection conn = null;
@@ -24,6 +32,10 @@ public class BaseDaoJdbc {
 		}
 		return conn;
 	}
+
+	/*
+	 * Methods
+	 */
 
 	public void close(Connection conn) {
 		DbUtils.closeQuietly(conn);

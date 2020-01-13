@@ -14,10 +14,17 @@ import javafx.scene.layout.BorderPane;
 
 public class MainPane extends BorderPane {
 
-	// Awareness of the model
+	/*
+	 * Fields
+	 */
+
 	private NavigationController navCon;
 	private Model model;
 	private EntryPane entryPane;
+
+	/*
+	 * Constructor
+	 */
 
 	public MainPane(NavigationController navCon, Model model) {
 		super();
@@ -82,6 +89,10 @@ public class MainPane extends BorderPane {
 		setCenter(entryPane);
 	}
 
+	/*
+	 * Helpers
+	 */
+
 	private void onNewEntryPress() {
 		navCon.openNewEntryStage();
 	}
@@ -127,6 +138,10 @@ public class MainPane extends BorderPane {
 		alert.setContentText("Bully - The Builder's Logging Tool - Connor Luckett");
 		alert.showAndWait(); // Pop up on press
 	}
+
+	/*
+	 * Getters and Setters
+	 */
 
 	public Model getModel() {
 		return model;

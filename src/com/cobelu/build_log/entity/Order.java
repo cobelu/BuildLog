@@ -38,7 +38,7 @@ public class Order extends BaseEntity {
 	}
 
 	/*
-	 * Getters
+	 * Getters and Setters
 	 */
 
 	public Date getDate() {
@@ -52,10 +52,6 @@ public class Order extends BaseEntity {
 	public String getSupplier() {
 		return supplier;
 	}
-
-	/*
-	 * Setters
-	 */
 
 	public void setDate(Date date) {
 		this.date = date;

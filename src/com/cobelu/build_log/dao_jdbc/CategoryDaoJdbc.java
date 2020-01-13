@@ -11,8 +11,16 @@ import com.cobelu.build_log.dao_interface.CategoryDaoI;
 
 public class CategoryDaoJdbc extends BaseDaoJdbc implements CategoryDaoI {
 
+	/*
+	 * Fields
+	 */
+
 	private final String categoryTable = "CATEGORY";
 	private final String categoryCol = "CATEGORY";
+
+	/*
+	 * Methods
+	 */
 
 	@Override
 	public List<String> findAll() {
@@ -91,6 +99,10 @@ public class CategoryDaoJdbc extends BaseDaoJdbc implements CategoryDaoI {
 			close(conn, pstmt, rs);
 		}
 	}
+
+	/*
+	 * Helpers
+	 */
 
 	private List<String> parseCategoriesFrom(ResultSet rs) throws SQLException {
 		List<String> categories = new LinkedList<String>();

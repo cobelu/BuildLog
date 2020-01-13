@@ -14,12 +14,20 @@ import com.cobelu.build_log.entity.Picture;
 
 public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 
+	/*
+	 * Fields
+	 */
+
 	private final String pictureTable = "PICTURE";
 	private final String idCol = "ID";
 	private final String entryCol = "ENTRY_ID";
 	private final String pictureCol = "DATA";
 	private final String fileCol = "FILE";
 	private final String descriptionCol = "DESCRIPTION";
+
+	/*
+	 * Methods
+	 */
 
 	@Override
 	public List<Picture> findAll() {
@@ -145,6 +153,10 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 			close(conn, pstmt, rs);
 		}
 	}
+
+	/*
+	 * Helpers
+	 */
 
 	private List<Picture> parsePicturesFrom(ResultSet rs) {
 		List<Picture> pictures = new LinkedList<Picture>();
