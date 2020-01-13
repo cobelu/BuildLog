@@ -112,8 +112,7 @@ public class EntryEditor extends GridPane {
 		add(removeButton, 0, 8);
 
 		// List of images
-		pictureList = new ListView<Picture>();
-		pictureList.setItems(pictures);
+		pictureList = new ListView<Picture>(pictures);
 		pictureList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -155,6 +154,7 @@ public class EntryEditor extends GridPane {
 		categoryComboBox.getSelectionModel().select(entry.getCategory());
 		titleTextField.setText(entry.getTitle());
 		descriptionTextArea.setText(entry.getDescription());
+		pictures = (ObservableList<Picture>) model.getPictureModel().findAllByEntry(entry);
 	}
 
 	/*

@@ -16,6 +16,13 @@ import javafx.stage.Stage;
 public class NavigationController {
 
 	/*
+	 * Constants
+	 */
+
+	public final int WIDTH = 800;
+	public final int HEIGHT = 400;
+
+	/*
 	 * Fields
 	 */
 
@@ -38,42 +45,42 @@ public class NavigationController {
 
 	public void openMainStage() {
 		MainPane mainPane = new MainPane(this, model);
-		stageTransition(mainPane, 800, 400, "Bully");
+		stageTransition(mainPane, WIDTH, HEIGHT, "Bully");
 	}
 
 	public void openEntryEditorStage(Entry entry) {
 		EntryEditor entryEditor = new EntryEditor(this, model, entry);
-		stageTransition(entryEditor, 400, 400, "Edit an Entry");
+		stageTransition(entryEditor, WIDTH, HEIGHT, "Edit an Entry");
 	}
 
 	public void openNewEntryStage() {
 		EntryEditor entryEditor = new EntryEditor(this, model);
-		stageTransition(entryEditor, 400, 400, "Add an Entry");
+		stageTransition(entryEditor, WIDTH, HEIGHT, "Add an Entry");
 	}
 
 	public void openPictureEditorStage(Picture picture) {
 		PictureEditor pictureEditor = new PictureEditor(this, model, picture);
-		stageTransition(pictureEditor, 400, 400, "Edit a Picture");
+		stageTransition(pictureEditor, WIDTH, HEIGHT, "Edit a Picture");
 	}
 
 	public void openNewPictureStage() {
 		PictureEditor pictureEditor = new PictureEditor(this, model);
-		stageTransition(pictureEditor, 400, 400, "Add a Picture");
+		stageTransition(pictureEditor, WIDTH, HEIGHT, "Add a Picture");
 	}
 
 	public void openProjectEditorStage() {
 		ProjectEditor projectEditor = new ProjectEditor(this, model);
-		stageTransition(projectEditor, 400, 400, "Edit a Project");
+		stageTransition(projectEditor, WIDTH, HEIGHT, "Edit a Project");
 	}
 
 	public void openNewProjectStage() {
 		ProjectEditor projectEditor = new ProjectEditor(this, model);
-		stageTransition(projectEditor, 400, 400, "Add a Project");
+		stageTransition(projectEditor, WIDTH, HEIGHT, "Add a Project");
 	}
 
 	public void openOpenProjectStage() {
 		ProjectOpener projectOpener = new ProjectOpener(this, model);
-		stageTransition(projectOpener, 400, 400, "Open a Project");
+		stageTransition(projectOpener, WIDTH, HEIGHT, "Open a Project");
 	}
 
 	/*

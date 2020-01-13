@@ -73,7 +73,7 @@ public class ProjectEditor extends GridPane {
 		categoryListView = new ListView<String>(categoriesList);
 		add(categoryListView, 1, 0);
 		addCategoryButton = new Button("Add");
-		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+		addCategoryButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				onAddCategoryButtonPress();

@@ -1,6 +1,5 @@
 package com.cobelu.build_log.dao_jdbc;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +21,6 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 	private final String idCol = "ID";
 	private final String entryCol = "ENTRY_ID";
 	private final String pictureCol = "DATA";
-	private final String fileCol = "FILE";
 	private final String descriptionCol = "DESCRIPTION";
 
 	/*
@@ -103,8 +101,8 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 			conn = connect();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setLong(1, picture.getEntryId());
-			pstmt.setString(2, picture.getFile().getAbsolutePath());
-			pstmt.setString(3, picture.getDescription());
+			pstmt.setString(2, picture.getDescription());
+			pstmt.setBytes(3, picture.getImageAsBytes());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -124,9 +122,8 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 			conn = connect();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setLong(1, picture.getEntryId());
-			// TODO: Fix image column
-			// pstmt.setBytes(2, picture.getImageAsByteArray());
-			pstmt.setString(3, picture.getDescription());
+			pstmt.setString(2, picture.getDescription());
+			pstmt.setBytes(3, picture.getImageAsBytes());
 			pstmt.setLong(4, picture.getId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -162,9 +159,9 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 		List<Picture> pictures = new LinkedList<Picture>();
 		try {
 			Long entryId = rs.getLong(entryCol);
-			File file = new File(rs.getString(fileCol));
+			byte[] bytes = rs.getBytes(pictureCol);
 			String description = rs.getString(descriptionCol);
-			Picture picture = new Picture(entryId, file, description);
+			Picture picture = new Picture(entryId, description, bytes);
 			pictures.add(picture);
 		} catch (SQLException e) {
 			e.printStackTrace();

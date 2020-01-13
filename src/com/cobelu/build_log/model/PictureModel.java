@@ -1,12 +1,13 @@
 package com.cobelu.build_log.model;
 
-import java.io.File;
 import java.util.List;
 
 import com.cobelu.build_log.dao_interface.PictureDaoI;
 import com.cobelu.build_log.dao_jdbc.PictureDaoJdbc;
 import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.entity.Picture;
+
+import javafx.scene.image.Image;
 
 public class PictureModel {
 
@@ -15,7 +16,7 @@ public class PictureModel {
 	 */
 
 	private PictureDaoI pictureDao;
-	private File selectedFile;
+	private Image selectedImage;
 
 	/*
 	 * Constructor
@@ -45,12 +46,12 @@ public class PictureModel {
 	 * Getters and Setters
 	 */
 
-	public File getSelectedPicture() {
-		return selectedFile;
+	public Image getSelectedImage() {
+		return selectedImage;
 	}
 
-	public void setSelectedFile(File selectedFile) {
-		this.selectedFile = selectedFile;
+	public void setSelectedImage(Image selectedImage) {
+		this.selectedImage = selectedImage;
 	}
 
 }

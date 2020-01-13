@@ -1,6 +1,14 @@
 package com.cobelu.build_log.entity;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 
 /**
  * Represents a JPG picture to be parsed from a blob of bytes in the database.
@@ -14,7 +22,7 @@ public class Picture extends BaseEntity {
 	 */
 
 	private Long entryId;
-	private File file;
+	private Image image;
 	private String description;
 
 	/*
@@ -25,11 +33,54 @@ public class Picture extends BaseEntity {
 		super();
 	}
 
-	public Picture(Long entryId, File file, String description) {
+	public Picture(Long entryId, String description, Image image) {
 		this();
 		this.entryId = entryId;
-		this.file = file;
 		this.description = description;
+		this.image = image;
+	}
+
+	public Picture(Long entryId, String description, byte[] bytes) {
+		this();
+		this.entryId = entryId;
+		this.description = description;
+		System.out.println(bytes);
+		this.image = byteArrayToImage(bytes);
+		System.out.println(image.toString());
+	}
+
+	/*
+	 * Methods
+	 */
+
+	public byte[] getImageAsBytes() {
+		byte[] data = null;
+		try {
+			BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, "jpg", bos);
+			data = bos.toByteArray();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("data: " + data.toString());
+		return data;
+	}
+
+	/*
+	 * Helpers
+	 */
+
+	private Image byteArrayToImage(byte[] bytes) {
+		Image image = null;
+		try {
+			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
+			System.out.println(bufferedImage.toString());
+			image = SwingFXUtils.toFXImage(bufferedImage, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return image;
 	}
 
 	/*
@@ -40,8 +91,8 @@ public class Picture extends BaseEntity {
 		return entryId;
 	}
 
-	public File getFile() {
-		return file;
+	public Image getImage() {
+		return image;
 	}
 
 	public String getDescription() {

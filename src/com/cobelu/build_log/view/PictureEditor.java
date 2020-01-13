@@ -1,11 +1,16 @@
 package com.cobelu.build_log.view;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Picture;
 import com.cobelu.build_log.model.Model;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -105,8 +110,7 @@ public class PictureEditor extends GridPane {
 		this.picture = picture;
 
 		// Load picture's image into view
-		Image image = new Image(picture.getFile().toURI().toString());
-		imageView = new ImageView(image);
+		imageView = new ImageView(picture.getImage());
 		// Update text field with given picture's description
 		descriptionTextField.setText(picture.getDescription());
 	}
@@ -127,9 +131,16 @@ public class PictureEditor extends GridPane {
 			 * NOTE: The file is restricted to image files by the file chooser extension
 			 * filters.
 			 */
-			model.getPictureModel().setSelectedFile(selectedFile);
+			BufferedImage bufferedImage = null;
+			try {
+				bufferedImage = ImageIO.read(selectedFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+			model.getPictureModel().setSelectedImage(image);
 			// TODO: Crop image to fit inside view
-			imageView.setImage(new Image(selectedFile.toURI().toString()));
+			imageView.setImage(model.getPictureModel().getSelectedImage());
 		}
 	}
 
@@ -138,11 +149,11 @@ public class PictureEditor extends GridPane {
 		// The associated entry is the current entry we are editing
 		Long entryId = model.getEntryModel().getSelectedEntry().getId();
 		// Get the image from the view
-		File file = model.getPictureModel().getSelectedPicture();
+		Image image = model.getPictureModel().getSelectedImage();
 		// Get the description from the text field
 		String description = descriptionTextField.getText();
 		// Create a picture
-		Picture picture = new Picture(entryId, file, description);
+		Picture picture = new Picture(entryId, description, image);
 		// Add new picture to the list of pictures
 		model.getPictureModel().insert(picture);
 		System.out.println(picture.toString()); // TODO: Remove
