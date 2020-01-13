@@ -18,6 +18,7 @@ public class ProjectDaoJdbc extends BaseDaoJdbc implements ProjectDaoI {
 	 */
 
 	private final String projectTable = "PROJECT";
+	private final String idCol = "ID";
 	private final String nameCol = "NAME";
 	private final String rootCol = "ROOT";
 
@@ -28,7 +29,7 @@ public class ProjectDaoJdbc extends BaseDaoJdbc implements ProjectDaoI {
 	@Override
 	public List<Project> findAll() {
 		String query = String.format("SELECT * FROM %s;", projectTable);
-		List<Project> projects = null;
+		List<Project> categories = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -36,19 +37,35 @@ public class ProjectDaoJdbc extends BaseDaoJdbc implements ProjectDaoI {
 			conn = connect();
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
-			projects = parseProjectsFrom(rs);
+			categories = parseProjectsFrom(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(conn, pstmt, rs);
 		}
-		return projects;
+		return categories;
 	}
 
 	@Override
 	public Project find(Project project) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = String.format("SELECT * FROM %s WHERE %s=?;", projectTable, idCol);
+		Project foundProject = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = connect();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setLong(1, project.getId());
+			rs = pstmt.executeQuery();
+			List<Project> projects = parseProjectsFrom(rs);
+			foundProject = projects.get(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(conn, pstmt, rs);
+		}
+		return foundProject;
 	}
 
 	@Override
