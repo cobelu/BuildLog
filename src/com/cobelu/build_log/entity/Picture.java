@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -16,6 +17,12 @@ import javafx.scene.image.Image;
  * @author cobelu
  */
 public class Picture extends BaseEntity {
+
+	/*
+	 * Constants
+	 */
+	public final int WIDTH = 128;
+	public final int HEIGHT = 128;
 
 	/*
 	 * Fields
@@ -44,9 +51,7 @@ public class Picture extends BaseEntity {
 		this();
 		this.entryId = entryId;
 		this.description = description;
-		System.out.println(bytes);
-		this.image = byteArrayToImage(bytes);
-		System.out.println(image.toString());
+		this.image = bytesToImage(bytes);
 	}
 
 	/*
@@ -67,19 +72,9 @@ public class Picture extends BaseEntity {
 		return data;
 	}
 
-	/*
-	 * Helpers
-	 */
-
-	private Image byteArrayToImage(byte[] bytes) {
-		Image image = null;
-		try {
-			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
-			System.out.println(bufferedImage.toString());
-			image = SwingFXUtils.toFXImage(bufferedImage, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private Image bytesToImage(byte[] bytes) {
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+		Image image = new Image(inputStream);
 		return image;
 	}
 

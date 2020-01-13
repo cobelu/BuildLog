@@ -8,6 +8,7 @@ import com.cobelu.build_log.entity.Entry;
 import com.cobelu.build_log.entity.Picture;
 import com.cobelu.build_log.model.Model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -154,7 +155,7 @@ public class EntryEditor extends GridPane {
 		categoryComboBox.getSelectionModel().select(entry.getCategory());
 		titleTextField.setText(entry.getTitle());
 		descriptionTextArea.setText(entry.getDescription());
-		pictures = (ObservableList<Picture>) model.getPictureModel().findAllByEntry(entry);
+		pictures = FXCollections.observableList(model.getPictureModel().findAllByEntry(entry));
 	}
 
 	/*
