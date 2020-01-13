@@ -1,12 +1,11 @@
 package com.cobelu.build_log.view;
 
 import com.cobelu.build_log.controller.NavigationController;
-import com.cobelu.build_log.entity.Project;
 import com.cobelu.build_log.model.Model;
 
 import javafx.scene.layout.GridPane;
 
-public class ProjectEditor extends GridPane {
+public class ProjectOpener extends GridPane {
 
 	/*
 	 * Fields
@@ -14,21 +13,15 @@ public class ProjectEditor extends GridPane {
 
 	private NavigationController navCon;
 	private Model model;
-	private Project project;
 
 	/*
-	 * Constructors
+	 * Constructor
 	 */
 
-	public ProjectEditor(NavigationController stage, Model model) {
+	public ProjectOpener(NavigationController navCon, Model model) {
 		super();
-		this.navCon = stage;
+		this.navCon = navCon;
 		this.model = model;
-	}
-
-	public ProjectEditor(NavigationController stage, Model model, Project project) {
-		this(stage, model);
-		this.project = project;
 	}
 
 	/*
@@ -41,10 +34,6 @@ public class ProjectEditor extends GridPane {
 
 	public Model getModel() {
 		return model;
-	}
-
-	public Project getProject() {
-		return project;
 	}
 
 }

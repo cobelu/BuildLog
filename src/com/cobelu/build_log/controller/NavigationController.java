@@ -7,6 +7,7 @@ import com.cobelu.build_log.view.EntryEditor;
 import com.cobelu.build_log.view.MainPane;
 import com.cobelu.build_log.view.PictureEditor;
 import com.cobelu.build_log.view.ProjectEditor;
+import com.cobelu.build_log.view.ProjectOpener;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -68,6 +69,11 @@ public class NavigationController {
 	public void openNewProjectStage() {
 		ProjectEditor projectEditor = new ProjectEditor(this, model);
 		stageTransition(projectEditor, 400, 400, "Add a Project");
+	}
+
+	public void openOpenProjectStage() {
+		ProjectOpener projectOpener = new ProjectOpener(this, model);
+		stageTransition(projectOpener, 400, 400, "Open a Project");
 	}
 
 	/*

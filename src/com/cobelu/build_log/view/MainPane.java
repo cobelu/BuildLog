@@ -98,11 +98,7 @@ public class MainPane extends BorderPane {
 	}
 
 	private void onNewProjectPress() {
-		// TODO: Do this
-		System.out.println("New Project Button Pressed!");
-		// Check for a location and name
-		// Create the location and DB with appropriate logic
-		// Ask for a save if needed
+		navCon.openNewProjectStage();
 	}
 
 	private void onReportPress() {
@@ -124,11 +120,11 @@ public class MainPane extends BorderPane {
 	}
 
 	private void onEditProjectPress() {
-		System.out.println("Edit Project Pressed");
+		navCon.openProjectEditorStage();
 	}
 
 	private void onOpenProjectPress() {
-		System.out.println("Open Project Pressed");
+		navCon.openOpenProjectStage();
 	}
 
 	private void onAboutPress() {
