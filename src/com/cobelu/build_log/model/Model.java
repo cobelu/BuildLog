@@ -44,4 +44,8 @@ public class Model {
 		return pictureModel;
 	}
 
+	public void setRootDirectory(File rootDirectory) {
+		this.rootDirectory = rootDirectory;
+	}
+
 }

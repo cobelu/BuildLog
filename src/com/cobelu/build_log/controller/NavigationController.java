@@ -6,8 +6,10 @@ import com.cobelu.build_log.model.Model;
 import com.cobelu.build_log.view.EntryEditor;
 import com.cobelu.build_log.view.MainPane;
 import com.cobelu.build_log.view.PictureEditor;
+import com.cobelu.build_log.view.ProjectEditor;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class NavigationController {
@@ -22,52 +24,50 @@ public class NavigationController {
 	}
 
 	public void openMainStage() {
-		currentStage.hide();
-		currentStage = new Stage();
 		MainPane mainPane = new MainPane(this, model);
-		Scene scene = new Scene(mainPane, 800, 400);
-		currentStage.setScene(scene);
-		currentStage.setTitle("Bully");
-		currentStage.show();
+		stageTransition(mainPane, 800, 400, "Bully");
 	}
 
 	public void openEntryEditorStage(Entry entry) {
-		currentStage.hide();
-		currentStage = new Stage();
 		EntryEditor entryEditor = new EntryEditor(this, model, entry);
-		Scene scene = new Scene(entryEditor, 700, 600);
-		currentStage.setScene(scene);
-		currentStage.setTitle("Edit an Entry");
-		currentStage.show();
+		stageTransition(entryEditor, 400, 400, "Edit an Entry");
 	}
 
 	public void openNewEntryStage() {
-		currentStage.hide();
-		currentStage = new Stage();
 		EntryEditor entryEditor = new EntryEditor(this, model);
-		Scene scene = new Scene(entryEditor, 400, 400);
-		currentStage.setScene(scene);
-		currentStage.setTitle("Add an Entry");
-		currentStage.show();
+		stageTransition(entryEditor, 400, 400, "Add an Entry");
 	}
 
 	public void openPictureEditorStage(Picture picture) {
-		currentStage.hide();
-		currentStage = new Stage();
 		PictureEditor pictureEditor = new PictureEditor(this, model, picture);
-		Scene scene = new Scene(pictureEditor, 700, 600);
-		currentStage.setScene(scene);
-		currentStage.setTitle("Edit a Picture");
-		currentStage.show();
+		stageTransition(pictureEditor, 400, 400, "Edit a Picture");
 	}
 
 	public void openNewPictureStage() {
+		PictureEditor pictureEditor = new PictureEditor(this, model);
+		stageTransition(pictureEditor, 400, 400, "Add a Picture");
+	}
+
+	public void openProjectEditorStage() {
+		ProjectEditor projectEditor = new ProjectEditor(this, model);
+		stageTransition(projectEditor, 400, 400, "Edit a Project");
+	}
+
+	public void openNewProjectStage() {
+		ProjectEditor projectEditor = new ProjectEditor(this, model);
+		stageTransition(projectEditor, 400, 400, "Add a Project");
+	}
+
+	/*
+	 * Helpers
+	 */
+
+	private void stageTransition(Pane newPane, int width, int height, String title) {
 		currentStage.hide();
 		currentStage = new Stage();
-		PictureEditor pictureEditor = new PictureEditor(this, model);
-		Scene scene = new Scene(pictureEditor, 700, 600);
+		Scene scene = new Scene(newPane, width, height);
 		currentStage.setScene(scene);
-		currentStage.setTitle("Add a Picture");
+		currentStage.setTitle(title);
 		currentStage.show();
 	}
 

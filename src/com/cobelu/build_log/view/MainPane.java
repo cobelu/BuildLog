@@ -35,25 +35,35 @@ public class MainPane extends BorderPane {
 		newEntry.setOnAction(e -> {
 			onNewEntryPress();
 		});
+		file.getItems().add(newEntry);
 		MenuItem newProject = new MenuItem("New Project");
 		newProject.setOnAction(e -> {
 			onNewProjectPress();
 		});
+		file.getItems().add(newProject);
+		MenuItem openProject = new MenuItem("Open Project");
+		openProject.setOnAction(e -> {
+			onOpenProjectPress();
+		});
+		file.getItems().add(openProject);
 		MenuItem editProject = new MenuItem("Edit Project");
 		editProject.setOnAction(e -> {
 			onEditProjectPress();
 		});
+		file.getItems().add(editProject);
 		// Report
 		MenuItem report = new MenuItem("Generate Report");
 		report.setOnAction(e -> {
 			onReportPress();
 		});
+		file.getItems().add(report);
 		// Quit
 		MenuItem quit = new MenuItem("Quit");
 		quit.setOnAction(e -> {
 			onQuitPress();
 		});
-		file.getItems().addAll(newEntry, report, quit);
+		file.getItems().add(quit);
+		menuBar.getMenus().add(file);
 
 		// Help menu items
 		final Menu help = new Menu("Help");
@@ -62,9 +72,9 @@ public class MainPane extends BorderPane {
 		about.setOnAction(e -> {
 			onAboutPress();
 		});
-		help.getItems().addAll(about);
+		help.getItems().add(about);
 
-		menuBar.getMenus().addAll(file, help);
+		menuBar.getMenus().add(help);
 		setTop(menuBar);
 
 		// Entry Pane
@@ -104,6 +114,10 @@ public class MainPane extends BorderPane {
 
 	private void onEditProjectPress() {
 		System.out.println("Edit Project Pressed");
+	}
+
+	private void onOpenProjectPress() {
+		System.out.println("Open Project Pressed");
 	}
 
 	private void onAboutPress() {

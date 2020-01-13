@@ -22,6 +22,7 @@ public class BuildLogApplication extends Application {
 		try {
 			model = new Model();
 			NavigationController stage = new NavigationController(model);
+			
 			stage.openMainStage();
 		} catch (Exception e) {
 			e.printStackTrace();
