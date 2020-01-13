@@ -4,6 +4,15 @@ import com.cobelu.build_log.controller.NavigationController;
 import com.cobelu.build_log.entity.Project;
 import com.cobelu.build_log.model.Model;
 
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class ProjectEditor extends GridPane {
@@ -15,6 +24,14 @@ public class ProjectEditor extends GridPane {
 	private NavigationController navCon;
 	private Model model;
 	private Project project;
+	private TextField projectTextField;
+	private Label rootDisplayLabel;
+	private Button rootButton;
+	private ListView<String> categoryListView;
+	private Button addCategoryButton;
+	private Button deleteCategoryButton;
+	private Button saveButton;
+	private Button cancelButton;
 
 	/*
 	 * Constructors
@@ -24,11 +41,103 @@ public class ProjectEditor extends GridPane {
 		super();
 		this.navCon = stage;
 		this.model = model;
+
+		// Geometry
+		setAlignment(Pos.CENTER);
+		setHgap(10);
+		setVgap(10);
+		setPadding(new Insets(25, 25, 25, 25));
+
+		// Date
+		Label projectLabel = new Label("Project:");
+		add(projectLabel, 0, 0);
+		projectTextField = new TextField();
+		add(projectTextField, 0, 1);
+
+		// Root
+		Label rootLabel = new Label("Root:");
+		add(rootLabel, 0, 3);
+		rootDisplayLabel = new Label("");
+		add(rootDisplayLabel, 0, 3);
+		rootButton = new Button("Select");
+		rootButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onRootButtonPress();
+			}
+		});
+		add(rootButton, 1, 9);
+
+		// Category
+		ObservableList<String> categoriesList = model.getEntryModel().getCategoriesList();
+		categoryListView = new ListView<String>(categoriesList);
+		add(categoryListView, 1, 0);
+		addCategoryButton = new Button("Add");
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onAddCategoryButtonPress();
+			}
+		});
+		add(addCategoryButton, 0, 9);
+		deleteCategoryButton = new Button("Remove");
+		deleteCategoryButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onDeleteCategoryButtonPress();
+			}
+		});
+		add(deleteCategoryButton, 0, 9);
+
+		// Submit button
+		saveButton = new Button("Save");
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onSaveButtonPress();
+			}
+		});
+		add(saveButton, 0, 9);
+
+		// Cancel button
+		cancelButton = new Button("Cancel");
+		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				onCancelButtonPress();
+			}
+		});
+		add(cancelButton, 1, 9);
 	}
 
 	public ProjectEditor(NavigationController stage, Model model, Project project) {
 		this(stage, model);
 		this.project = project;
+		// TODO: Fill out with details
+	}
+
+	/*
+	 * Helpers
+	 */
+
+	private void onSaveButtonPress() {
+		// TODO: DO
+	}
+
+	private void onCancelButtonPress() {
+		// TODO: DO
+	}
+
+	private void onRootButtonPress() {
+		// TODO: DO
+	}
+
+	private void onAddCategoryButtonPress() {
+		// TODO: DO
+	}
+
+	private void onDeleteCategoryButtonPress() {
+		// TODO: DO
 	}
 
 	/*
