@@ -113,7 +113,7 @@ public class EntryEditor extends GridPane {
 		add(removeButton, 0, 8);
 
 		// List of images
-		pictureList = new ListView<Picture>(pictures);
+		pictureList = new ListView<Picture>();
 		pictureList.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -156,6 +156,8 @@ public class EntryEditor extends GridPane {
 		titleTextField.setText(entry.getTitle());
 		descriptionTextArea.setText(entry.getDescription());
 		pictures = FXCollections.observableList(model.getPictureModel().findAllByEntry(entry));
+		pictureList.getItems().addAll(pictures);
+
 	}
 
 	/*

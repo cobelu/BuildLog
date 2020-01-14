@@ -20,8 +20,8 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 	private final String pictureTable = "PICTURE";
 	private final String idCol = "ID";
 	private final String entryCol = "ENTRY_ID";
-	private final String pictureCol = "DATA";
 	private final String descriptionCol = "DESCRIPTION";
+	private final String pictureCol = "DATA";
 
 	/*
 	 * Methods
@@ -93,7 +93,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 	@Override
 	public void insert(Picture picture) {
 		String query = String.format("INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?);", pictureTable, entryCol,
-				pictureCol, descriptionCol);
+				descriptionCol, pictureCol);
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -113,8 +113,8 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 
 	@Override
 	public void update(Picture picture) {
-		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?) WHERE %s=?;", pictureTable, entryCol, pictureCol,
-				descriptionCol, idCol);
+		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?) WHERE %s=?;", pictureTable, entryCol,
+				descriptionCol, pictureCol, idCol);
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

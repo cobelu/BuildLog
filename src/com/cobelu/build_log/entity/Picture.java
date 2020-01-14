@@ -29,8 +29,8 @@ public class Picture extends BaseEntity {
 	 */
 
 	private Long entryId;
-	private Image image;
 	private String description;
+	private Image image;
 
 	/*
 	 * Constructors
@@ -68,7 +68,7 @@ public class Picture extends BaseEntity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("data: " + data.toString());
+		System.out.println("data: " + data.toString()); // TODO: Remove
 		return data;
 	}
 
@@ -108,7 +108,7 @@ public class Picture extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return String.format("Picture: {entrydD: %d, description: %s}", entryId, description);
+		return description;
 	}
 
 }
