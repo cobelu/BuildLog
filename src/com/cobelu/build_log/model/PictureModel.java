@@ -16,6 +16,7 @@ public class PictureModel {
 	 */
 
 	private PictureDaoI pictureDao;
+	private Picture selectedPicture;
 	private Image selectedImage;
 
 	/*
@@ -34,20 +35,32 @@ public class PictureModel {
 		return pictureDao.find(picture);
 	}
 
+	public void insert(Picture picture) {
+		pictureDao.insert(picture);
+	}
+
 	public void update(Picture picture) {
 		pictureDao.update(picture);
 	}
 
-	public void insert(Picture picture) {
-		pictureDao.insert(picture);
+	public void delete(Picture picture) {
+		pictureDao.delete(picture);
 	}
 
 	/*
 	 * Getters and Setters
 	 */
 
+	public Picture getSelectedPicture() {
+		return selectedPicture;
+	}
+
 	public Image getSelectedImage() {
 		return selectedImage;
+	}
+
+	public void setSelectedPicture(Picture selectedPicture) {
+		this.selectedPicture = selectedPicture;
 	}
 
 	public void setSelectedImage(Image selectedImage) {

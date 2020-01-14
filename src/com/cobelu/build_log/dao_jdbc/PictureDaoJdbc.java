@@ -113,7 +113,7 @@ public class PictureDaoJdbc extends BaseDaoJdbc implements PictureDaoI {
 
 	@Override
 	public void update(Picture picture) {
-		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=?) WHERE %s=?;", pictureTable, entryCol,
+		String query = String.format("UPDATE %s SET %s=?, %s=?, %s=? WHERE %s=?;", pictureTable, entryCol,
 				descriptionCol, pictureCol, idCol);
 		Connection conn = null;
 		PreparedStatement pstmt = null;

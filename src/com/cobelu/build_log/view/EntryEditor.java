@@ -156,8 +156,7 @@ public class EntryEditor extends GridPane {
 		titleTextField.setText(entry.getTitle());
 		descriptionTextArea.setText(entry.getDescription());
 		pictures = FXCollections.observableList(model.getPictureModel().findAllByEntry(entry));
-		pictureList.getItems().addAll(pictures);
-
+		pictureList.setItems(pictures);
 	}
 
 	/*
@@ -175,6 +174,7 @@ public class EntryEditor extends GridPane {
 		Picture selectedPicture = pictureList.getSelectionModel().getSelectedItem();
 		// TODO: Ask if sure
 		if (selectedPicture != null) {
+			model.getPictureModel().delete(selectedPicture);
 			pictures.remove(selectedPicture);
 		}
 	}
@@ -182,6 +182,7 @@ public class EntryEditor extends GridPane {
 	private void onPictureListDoublePress() {
 		// Get selected picture from the list
 		Picture picture = pictureList.getSelectionModel().getSelectedItem();
+		model.getPictureModel().setSelectedPicture(picture);
 		// Open a picture editor for the selected picture
 		navCon.openPictureEditorStage(picture);
 	}

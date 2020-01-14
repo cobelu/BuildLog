@@ -154,9 +154,14 @@ public class PictureEditor extends GridPane {
 		String description = descriptionTextField.getText();
 		// Create a picture
 		Picture picture = new Picture(entryId, description, image);
+		picture.setId(model.getPictureModel().getSelectedPicture().getId());
 		// Add new picture to the list of pictures
-		model.getPictureModel().insert(picture);
-		System.out.println(picture.toString()); // TODO: Remove
+		if (this.picture == null) {
+			model.getPictureModel().insert(picture);
+		} else {
+			model.getPictureModel().update(picture);
+		}
+		navCon.openEntryEditorStage(model.getEntryModel().getSelectedEntry());
 	}
 
 	private void onCancelButtonPress() {

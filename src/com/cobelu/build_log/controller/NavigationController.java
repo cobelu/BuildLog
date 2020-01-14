@@ -20,7 +20,7 @@ public class NavigationController {
 	 */
 
 	public final int WIDTH = 800;
-	public final int HEIGHT = 400;
+	public final int HEIGHT = 600;
 
 	/*
 	 * Fields
