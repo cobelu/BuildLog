@@ -24,9 +24,7 @@ public class ProjectEditor extends GridPane {
 	private NavigationController navCon;
 	private Model model;
 	private Project project;
-	private TextField projectTextField;
-	private Label rootDisplayLabel;
-	private Button rootButton;
+	private TextField nameTextField;
 	private ListView<String> categoryListView;
 	private Button addCategoryButton;
 	private Button deleteCategoryButton;
@@ -48,30 +46,15 @@ public class ProjectEditor extends GridPane {
 		setVgap(10);
 		setPadding(new Insets(25, 25, 25, 25));
 
-		// Date
-		Label projectLabel = new Label("Project:");
-		add(projectLabel, 0, 0);
-		projectTextField = new TextField();
-		add(projectTextField, 0, 1);
-
-		// Root
-		Label rootLabel = new Label("Root:");
-		add(rootLabel, 0, 3);
-		rootDisplayLabel = new Label("");
-		add(rootDisplayLabel, 0, 3);
-		rootButton = new Button("Select");
-		rootButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				onRootButtonPress();
-			}
-		});
-		add(rootButton, 1, 9);
+		// Name
+		Label nameLabel = new Label("Project Name:");
+		add(nameLabel, 0, 0);
+		nameTextField = new TextField();
+		add(nameTextField, 1, 0);
 
 		// Category
-		ObservableList<String> categoriesList = model.getEntryModel().getCategoriesList();
-		categoryListView = new ListView<String>(categoriesList);
-		add(categoryListView, 1, 0);
+		Label categoryLabel = new Label("Categories:");
+		add(categoryLabel, 0, 1);
 		addCategoryButton = new Button("Add");
 		addCategoryButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -79,7 +62,7 @@ public class ProjectEditor extends GridPane {
 				onAddCategoryButtonPress();
 			}
 		});
-		add(addCategoryButton, 0, 9);
+		add(addCategoryButton, 0, 2);
 		deleteCategoryButton = new Button("Remove");
 		deleteCategoryButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -87,7 +70,12 @@ public class ProjectEditor extends GridPane {
 				onDeleteCategoryButtonPress();
 			}
 		});
-		add(deleteCategoryButton, 0, 9);
+		add(deleteCategoryButton, 0, 3);
+
+		// Category
+		ObservableList<String> categoriesList = model.getEntryModel().getCategoriesList();
+		categoryListView = new ListView<String>(categoriesList);
+		add(categoryListView, 1, 1, 1, 3);
 
 		// Submit button
 		saveButton = new Button("Save");
@@ -97,7 +85,7 @@ public class ProjectEditor extends GridPane {
 				onSaveButtonPress();
 			}
 		});
-		add(saveButton, 0, 9);
+		add(saveButton, 0, 4);
 
 		// Cancel button
 		cancelButton = new Button("Cancel");
@@ -107,7 +95,7 @@ public class ProjectEditor extends GridPane {
 				onCancelButtonPress();
 			}
 		});
-		add(cancelButton, 1, 9);
+		add(cancelButton, 1, 4);
 	}
 
 	public ProjectEditor(NavigationController stage, Model model, Project project) {
@@ -122,14 +110,11 @@ public class ProjectEditor extends GridPane {
 
 	private void onSaveButtonPress() {
 		// TODO: DO
+		navCon.openMainStage();
 	}
 
 	private void onCancelButtonPress() {
-		// TODO: DO
-	}
-
-	private void onRootButtonPress() {
-		// TODO: DO
+		navCon.openMainStage();
 	}
 
 	private void onAddCategoryButtonPress() {

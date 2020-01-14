@@ -174,6 +174,7 @@ public class EntryEditor extends GridPane {
 		Picture selectedPicture = pictureList.getSelectionModel().getSelectedItem();
 		// TODO: Ask if sure
 		if (selectedPicture != null) {
+			// TODO: Ask if sure
 			model.getPictureModel().delete(selectedPicture);
 			pictures.remove(selectedPicture);
 		}
