@@ -1,5 +1,7 @@
 # Bully
 
+![alt text](src/resources/readme/bully_logo.png "Logo")
+
 ## Please note that Bully is not quite ready for a first release!
 
 Bully is an open source tool for logging a build.
@@ -7,7 +9,8 @@ Bully is an open source tool for logging a build.
 but could easily be used for other projects where time needs to be tracked
 (car restoration, building a house, etc.).
 
-![alt text](src/resources/screenshots/screenshot1.png "Build Logging")
+![alt text](src/resources/readme/screenshot1.png "Build Logging")
+
 Keep track of hours spent and tag by chapter/section.
 
 ##### Please note that I have not fully tested Bully and am not responsible for any problems you might encounter.
@@ -64,6 +67,9 @@ Plus, it's so much easier to back up a project when _everything_ is in the datab
 A: You might not be able to poke into the files and understand what's going on (and that's OK!),
 but some people can and want to.
 If there were something wrong, at least people would be able to see what it is.
+
+#### Q: What is the logo?
+A: It's a can of corned beef!
 
 #### Q: Why is it not done yet?
 A: I'm a grad student.
